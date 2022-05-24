@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'secret_key' # sould be unique for you
+SECRET_KEY = "d1mp-#aokwo!4(1-_wer5o7dz5_%n-9d&bv*@a-*0tw$7)ju3_"
  
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -119,3 +119,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# openweathermap API KEY
+OPENWEATHER_API_KEY = '9d0c14811be0ca6ae8836e2d09d6c520'

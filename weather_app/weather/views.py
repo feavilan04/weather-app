@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
+from django.conf import settings
 import requests
 from .models import City
 from .forms import CityForm
 # Create your views here.
 def index(request):
-    url = 'should_be_unique_for_you'
+    url = 'https://api.openweathermap.org/data/2.5/weather?q={0}&appid={1}'
     err_msg = ''
     message = ''
     message_class = ''
@@ -14,7 +15,7 @@ def index(request):
             new_city = form.cleaned_data['name']
             existing_city_count = City.objects.filter(name=new_city).count()
             if existing_city_count == 0:
-                r = requests.get(url.format(new_city)).json()
+                r = requests.get(url.format(new_city, settings.OPENWEATHER_API_KEY)).json()
                 if r['cod'] == 200:
                     form.save()
                 else:
@@ -32,7 +33,7 @@ def index(request):
     cities = City.objects.all()
     weather_data = []
     for city in cities:
-        r = requests.get(url.format(city)).json()
+        r = requests.get(url.format(city, settings.OPENWEATHER_API_KEY)).json()
         city_weather = {
             'city' : city.name,
             'temperature' : r['main']['temp'],
