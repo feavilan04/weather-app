@@ -27,6 +27,7 @@ The first command stops the running container and the second remove it from the 
 
 To run the Image:
 
+
 ```
 docker run -dp 8000:8000 --name weather_web_app weather_app:latest 
 ```
