@@ -23,6 +23,12 @@ docker stop weather_web_app
 docker rm weather_web_app
 ```
 
+You can also run them together by using the command below
+
+````
+docker stop demo && docker rm demo 
+```
+
 The first command stops the running container and the second remove it from the container list.
 
 To run the Image:
