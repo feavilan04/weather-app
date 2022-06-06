@@ -6,17 +6,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Weather</title>
+    <title>Clima</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.css" />
+    <link rel="shortcut icon" href="{% static 'weather/favicon.ico' %}"/> 
 </head>
 
 <body>
-    <section class="hero is-primary">
+    <section class="hero is-info">
         <div class="hero-body">
             <div class="container">
-                <h1 class="title">
-                    What's the weather like?
+                <h1 class="has-text-centered is-size-4 ">
+                    ¿Como Esta El Clima?
                 </h1>
+            </div>
+        </div>
+    </section>
+    <section
+        <img src="{% static 'weather/clima.jpg'%}" >
+    </section>
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-offset-4 is-4">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="field has-addons">
+                            <div class="control is-expanded">
+                                {{form.name}}
+                            </div>
+                            <div class="control">
+                                <button type="submit"  class="button is-info">
+                                    Añadir Ciudad 
+                                </button>
+                            </div>
+                        </div>
+                        {% if message %}
+                            <div class="notification {{ message_class }}">{{ message }}</div>
+                        {% endif %}
+                    </form>
+                </div>
             </div>
         </div>
     </section>
@@ -32,7 +60,7 @@
                             </div>
                             <div class="control">
                                 <button type="submit"  class="button is-info">
-                                    Add City
+                                    Añadir Cordenadas
                                 </button>
                             </div>
                         </div>
@@ -78,10 +106,6 @@
             </div>
         </div>
     </section>
-    <section>
-        <img src="{% static 'weather/sabana.png'%}">
-    </section>
-
     <footer class="footer">
         <div class="content has-text-centered">
             <p>
