@@ -1,3 +1,6 @@
+
+import time
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.conf import settings
 import requests
@@ -19,14 +22,14 @@ def index(request):
                 if r['cod'] == 200:
                     form.save()
                 else:
-                    err_msg = 'City does not exist!'
+                    err_msg = 'la ciudad no existe !'
             else:
-                err_msg = 'City already exists!'
+                err_msg = 'la ciudad ya existe!'
         if err_msg:
             message = err_msg
             message_class = 'is-danger'
         else:
-            message = 'City added Successfully!'
+            message = 'Ciudad añadida con éxito!'
             message_class = 'is_success'
     
     form = CityForm()
@@ -36,7 +39,7 @@ def index(request):
         r = requests.get(url.format(city, settings.OPENWEATHER_API_KEY)).json()
         city_weather = {
             'city' : city.name,
-            'temperature' : r['main']['temp']
+            'temperature' : r['main']['temp'],
             'description' : r['weather'][0]['description'],
             'icon' : r['weather'][0]['icon'],
         }
@@ -51,3 +54,21 @@ def index(request):
 def delete_city(requests, city_name):
     City.objects.get(name=city_name).delete()
     return redirect('home')
+
+def prueba(request):
+    hora = time.strftime('%H')
+    hora_integer = int(hora)
+
+    hora_completa = time.strftime('%H:%M:%S (%Z)')
+    fecha_completa = time.strftime('%d %b %Y')
+    saludo = ""
+
+    if hora_integer < 12: # verdadero para todas las horas entre 00 y 11
+        saludo = "Buenos días"
+    elif hora_integer < 19: # verdadero para todas la horas entre 12 y 18
+        saludo = "Buenas tardes"
+    else: # la hora debe ser mayor a 18
+        saludo = "Buenas Noches"
+    mensaje = "{0} son las : {1}".format(saludo, hora_completa)
+    mensaje_formateo = "{primer_valor} son las : {segundo_valor} del {tercer_valor}".format(primer_valor=saludo, segundo_valor=hora_completa, tercer_valor=fecha_completa)
+    return HttpResponse(mensaje_formateo)
