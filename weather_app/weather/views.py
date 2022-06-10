@@ -1,4 +1,4 @@
-
+from django.template import Context, Template
 import time
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -7,6 +7,15 @@ import requests
 from .models import City
 from .forms import CityForm
 # Create your views here.
+def index_prueba(request):
+	
+    context = Context({"my_name": "Adrian"})
+    templete.render(request, 'weather/vista1.html', "Mi nombre es {{ my_name }}.")
+
+def pagina2(request):
+	return render(request, 'weather/vista2.html', {})
+
+
 def index(request):
     url = 'https://api.openweathermap.org/data/2.5/weather?q={0}&appid={1}'
     err_msg = ''
