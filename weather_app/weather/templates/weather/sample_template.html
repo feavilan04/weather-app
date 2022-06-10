@@ -1,0 +1,11 @@
+<html>
+    <body>
+        <h1>Hola, El nombre aleatorio es: {{nombre_seleccionado}}.</h1> 
+        <p>El nombre es elegido en una lista de {{cantidad_de_nombres}} nombres.</p>
+        <ul>
+        {% for nombre_temporal in lista_nombres %}
+            <li>{{nombre_temporal}}</li>
+        {% endfor %}
+        </ul>
+    </body>
+</html>
