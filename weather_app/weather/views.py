@@ -9,6 +9,7 @@ from django.conf import settings
 import requests
 from .models import City
 from .forms import CityForm
+import random
 # Create your views here.
 def index_prueba(request):
     name = [
@@ -92,3 +93,52 @@ def prueba(request):
     mensaje = "{0} son las : {1}".format(saludo, hora_completa)
     mensaje_formateo = "{primer_valor} son las : {segundo_valor} del {tercer_valor}".format(primer_valor=saludo, segundo_valor=hora_completa, tercer_valor=fecha_completa)
     return HttpResponse(mensaje_formateo)
+
+def sample_view(request):
+    # create list with 20 names and return a random one
+    names = [
+        'John',
+        'Paul',
+        'George',
+        'Ringo',
+        'Pete',
+        'Stuart',
+        'Brian',
+        'Ron',
+        'Jim',
+        'Bill',
+        'Jack',
+        'Joe',
+        'Mike',
+        'Tom',
+        'Dick',
+        'Harry',
+        'Larry',
+        'Joe',
+        'John',
+        'Paul',
+        'George',
+        'Ringo',
+        'Pete',
+        'Stuart',
+        'Brian',
+        'Ron',
+        'Jim',
+        'Bill',
+        'Jack',
+        'Joe',
+        'Mike',
+        'Tom',
+        'Dick',
+        'Harry',
+        'Larry']
+    # pick one of these randomly
+    name = names[random.randint(0, len(names) - 1)] # numero entre 0 y 19
+    context = {
+        'nombre_seleccionado': name,
+        'cantidad_de_nombres': len(names),
+        'lista_nombres': names
+    }
+    return render(request, 'weather/sample_template.html', context) 
+    
+    
