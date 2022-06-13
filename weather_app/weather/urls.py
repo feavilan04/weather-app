@@ -8,5 +8,6 @@ urlpatterns = [
     path('prueba', views.prueba, name='prueba'),
     path('index-prueba',views.index_prueba, name='index_prueba'),
     path('pagina-prueba', views.pagina2, name='pagina_prueba'),
-    
+    path('pagina-prueba3', views.pagina3, name='pagina_prueba3'),
+
 ]

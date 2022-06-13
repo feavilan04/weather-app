@@ -1,4 +1,5 @@
-from ast import Num
+import datetime
+from multiprocessing import context
 import random
 import time
 from django.http import HttpResponse
@@ -41,7 +42,16 @@ def pagina2(request):
     
 
 def pagina3(request):
-	return render(request, 'weather/vista3.html', {})
+    start = datetime.date(2021,12,10)
+    periods = 5
+    daterange = []
+    for day in range(periods):
+        date = (start + datetime.timedelta(days = day)).isoformat()
+        daterange.append(date)
+    context={
+        'fecha':daterange
+    }
+    return render(request, 'weather/vista3.html', context)
 
 
 def index(request):
