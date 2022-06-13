@@ -1,8 +1,6 @@
-from multiprocessing import context
+from ast import Num
 import random
 import time
-from tkinter.font import names
-from unicodedata import name
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.conf import settings
@@ -11,7 +9,7 @@ from .models import City
 from .forms import CityForm
 # Create your views here.
 def index_prueba(request):
-    name = [
+    names = [
         'juan',
         'carlos',
         'pepe',
@@ -24,7 +22,26 @@ def index_prueba(request):
     
 
 def pagina2(request):
-	return render(request, 'weather/vista2.html', {})
+    num = [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10]
+    nume = num[random.randint(0, len(num) - 1)]
+    context = {
+        'numero_seleccionado':nume
+    }
+    return render(request, 'weather/vista2.html', context)
+    
+
+def pagina3(request):
+	return render(request, 'weather/vista3.html', {})
 
 
 def index(request):
