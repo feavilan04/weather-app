@@ -53,6 +53,28 @@ def pagina3(request):
     }
     return render(request, 'weather/vista3.html', context)
 
+def pagina4(request):
+    precios = [
+        50,
+        75,
+        46,
+        22,
+        80,
+        65,
+        8]
+    min = max = precios[0]
+    for precio in precios:
+        if precio < min:
+            min = precio
+        elif precio > max:
+            max = precio
+    
+    context = {
+
+        'numero_minimo':min, 
+        'numero_maximo':max
+    }
+    return render(request, 'weather/vista4.html', context)
 
 def index(request):
     url = 'https://api.openweathermap.org/data/2.5/weather?q={0}&appid={1}'
