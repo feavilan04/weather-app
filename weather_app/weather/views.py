@@ -76,6 +76,29 @@ def pagina4(request):
     }
     return render(request, 'weather/vista4.html', context)
 
+
+def pagina5(request):
+    palabra = "casa"
+    vocales = {
+            'a':0,
+            'e':0, 
+            'i':0, 
+            'o':0, 
+            'u':0
+             }
+    for vocal, recurrencia in vocales.items(): 
+        for letra in palabra: 
+            if letra == vocal:
+                recurrencia += 1
+        vocales[vocal] = recurrencia
+    context={
+
+        'vocal':vocales
+    }
+    return render(request, 'weather/vista5.html', context)
+
+    
+
 def index(request):
     url = 'https://api.openweathermap.org/data/2.5/weather?q={0}&appid={1}'
     err_msg = ''
