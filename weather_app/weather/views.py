@@ -8,6 +8,7 @@ from django.conf import settings
 import requests
 from .models import City
 from .forms import CityForm
+from django.views import View
 import random
 # Create your views here.
 def index_prueba(request):
@@ -212,5 +213,13 @@ def sample_view(request):
         'lista_nombres': names
     }
     return render(request, 'weather/sample_template.html', context) 
+
+class VistaPrueba(View):
+    def get(self, request):
+        return HttpResponse('Esta es una prueba de vista en GET')
+    
+    def post(self, request):
+        print(request.POST)
+        return HttpResponse('Esta es una prueba de vista en POST')
     
     
