@@ -1,8 +1,7 @@
+import datetime
 from multiprocessing import context
 import random
 import time
-from tkinter.font import names
-from unicodedata import name
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.conf import settings
@@ -12,7 +11,7 @@ from .forms import CityForm
 import random
 # Create your views here.
 def index_prueba(request):
-    name = [
+    names = [
         'juan',
         'carlos',
         'pepe',
@@ -25,8 +24,81 @@ def index_prueba(request):
     
 
 def pagina2(request):
-	return render(request, 'weather/vista2.html', {})
+    num = [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10]
+    nume = num[random.randint(0, len(num) - 1)]
+    context = {
+        'numero_seleccionado':nume
+    }
+    return render(request, 'weather/vista2.html', context)
+    
 
+def pagina3(request):
+    start = datetime.date(2021,12,10)
+    periods = 5
+    daterange = []
+    for day in range(periods):
+        date = (start + datetime.timedelta(days = day)).isoformat()
+        daterange.append(date)
+    context={
+        'fecha':daterange
+    }
+    return render(request, 'weather/vista3.html', context)
+
+def pagina4(request):
+    precios = [
+        50,
+        75,
+        46,
+        22,
+        80,
+        65,
+        8]
+    min = max = precios[0]
+    for precio in precios:
+        if precio < min:
+            min = precio
+        elif precio > max:
+            max = precio
+    
+    context = {
+
+        'numero_minimo':min, 
+        'numero_maximo':max
+    }
+    return render(request, 'weather/vista4.html', context)
+
+
+def pagina5(request):
+    palabra = "casa"
+    vocales = {
+            'a':0,
+            'e':0, 
+            'i':0, 
+            'o':0, 
+            'u':0
+             }
+    for vocal, recurrencia in vocales.items(): 
+        for letra in palabra: 
+            if letra == vocal:
+                recurrencia += 1
+        vocales[vocal] = recurrencia
+    context={
+
+        'vocal':vocales
+    }
+    return render(request, 'weather/vista5.html', context)
+
+    
 
 def index(request):
     url = 'https://api.openweathermap.org/data/2.5/weather?q={0}&appid={1}'
