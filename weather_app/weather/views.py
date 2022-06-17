@@ -8,95 +8,101 @@ from django.conf import settings
 import requests
 from .models import City
 from .forms import CityForm
+from django.views import View
 import random
 # Create your views here.
-def index_prueba(request):
-    names = [
-        'juan',
-        'carlos',
-        'pepe',
-        'jose']
-    name = names[random.randint(0, len(names) - 1)]
-    context = {
-        'nombre_seleccionado':name
-    }
-    return render(request, 'weather/vista1.html',context)
+class IndexPrueba(View):
+    def get(self, request):
+        names = [
+            'juan',
+            'carlos',
+            'pepe',
+            'jose']
+        name = names[random.randint(0, len(names) - 1)]
+        context = {
+            'nombre_seleccionado':name
+        }
+        return render(request, 'weather/vista1.html',context)
     
 
-def pagina2(request):
-    num = [
-        1,
-        2,
-        3,
-        4,
-        5,
-        6,
-        7,
-        8,
-        9,
-        10]
-    nume = num[random.randint(0, len(num) - 1)]
-    context = {
-        'numero_seleccionado':nume
-    }
-    return render(request, 'weather/vista2.html', context)
+class VistaDos(View):
+    def get(self, request):
+        num = [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10]
+        nume = num[random.randint(0, len(num) - 1)]
+        context = {
+            'numero_seleccionado':nume
+        }
+        return render(request, 'weather/vista2.html', context)
     
 
-def pagina3(request):
-    start = datetime.date(2021,12,10)
-    periods = 5
-    daterange = []
-    for day in range(periods):
-        date = (start + datetime.timedelta(days = day)).isoformat()
-        daterange.append(date)
-    context={
-        'fecha':daterange
-    }
-    return render(request, 'weather/vista3.html', context)
+class VistaTres(View):
+    def get(self, request):
+        start = datetime.date(2021,12,10)
+        periods = 5
+        daterange = []
+        for day in range(periods):
+            date = (start + datetime.timedelta(days = day)).isoformat()
+            daterange.append(date)
+        context={
+            'fecha':daterange
+        }
+        return render(request, 'weather/vista3.html', context)
 
-def pagina4(request):
-    precios = [
-        50,
-        75,
-        46,
-        22,
-        80,
-        65,
-        8]
-    min = max = precios[0]
-    for precio in precios:
-        if precio < min:
-            min = precio
-        elif precio > max:
-            max = precio
-    
-    context = {
+class VistaCuatro(View):
+    def get(self, request):
+        precios = [
+            50,
+            75,
+            46,
+            22,
+            80,
+            65,
+            8]
+        min = max = precios[0]
+        for precio in precios:
+            if precio < min:
+                min = precio
+            elif precio > max:
+                max = precio
+        
+        context = {
 
-        'numero_minimo':min, 
-        'numero_maximo':max
-    }
-    return render(request, 'weather/vista4.html', context)
+            'numero_minimo':min, 
+            'numero_maximo':max
+        }
+        return render(request, 'weather/vista4.html', context)
 
 
-def pagina5(request):
-    palabra = "casa"
-    vocales = {
-            'a':0,
-            'e':0, 
-            'i':0, 
-            'o':0, 
-            'u':0
-             }
-    for vocal, recurrencia in vocales.items(): 
-        for letra in palabra: 
-            if letra == vocal:
-                recurrencia += 1
-        vocales[vocal] = recurrencia
-    context={
+class VistaCinco(View):
+    def get(self,request):
+        palabra = "murcielago"
+        vocales = {
+                'a':0,
+                'e':0, 
+                'i':0, 
+                'o':0, 
+                'u':0
+                }
+        for vocal, recurrencia in vocales.items(): 
+            for letra in palabra: 
+                if letra == vocal:
+                    recurrencia += 1
+            vocales[vocal] = recurrencia
+        context={
 
-        'vocal':vocales
-    }
-    return render(request, 'weather/vista5.html', context)
+            'vocal':vocales
+        }
+        return render(request, 'weather/vista5.html', context)
 
     
 
@@ -144,73 +150,82 @@ def index(request):
         'message_class' : message_class
         }
     return render(request,'weather/weather.html', context)
+
 def delete_city(requests, city_name):
     City.objects.get(name=city_name).delete()
     return redirect('home')
 
-def prueba(request):
-    hora = time.strftime('%H')
-    hora_integer = int(hora)
+class Prueba(View):
+    def get(self,request):
+        hora = time.strftime('%H')
+        hora_integer = int(hora)
 
-    hora_completa = time.strftime('%H:%M:%S (%Z)')
-    fecha_completa = time.strftime('%d %b %Y')
-    saludo = ""
+        hora_completa = time.strftime('%H:%M:%S (%Z)')
+        fecha_completa = time.strftime('%d %b %Y')
+        saludo = ""
 
-    if hora_integer < 12: # verdadero para todas las horas entre 00 y 11
-        saludo = "Buenos días"
-    elif hora_integer < 19: # verdadero para todas la horas entre 12 y 18
-        saludo = "Buenas tardes"
-    else: # la hora debe ser mayor a 18
-        saludo = "Buenas Noches"
-    mensaje = "{0} son las : {1}".format(saludo, hora_completa)
-    mensaje_formateo = "{primer_valor} son las : {segundo_valor} del {tercer_valor}".format(primer_valor=saludo, segundo_valor=hora_completa, tercer_valor=fecha_completa)
-    return HttpResponse(mensaje_formateo)
+        if hora_integer < 12: # verdadero para todas las horas entre 00 y 11
+            saludo = "Buenos días"
+        elif hora_integer < 19: # verdadero para todas la horas entre 12 y 18
+            saludo = "Buenas tardes"
+        else: # la hora debe ser mayor a 18
+            saludo = "Buenas Noches"
+        mensaje = "{0} son las : {1}".format(saludo, hora_completa)
+        mensaje_formateo = "{primer_valor} son las : {segundo_valor} del {tercer_valor}".format(primer_valor=saludo, segundo_valor=hora_completa, tercer_valor=fecha_completa)
+        return HttpResponse(mensaje_formateo)
 
-def sample_view(request):
-    # create list with 20 names and return a random one
-    names = [
-        'John',
-        'Paul',
-        'George',
-        'Ringo',
-        'Pete',
-        'Stuart',
-        'Brian',
-        'Ron',
-        'Jim',
-        'Bill',
-        'Jack',
-        'Joe',
-        'Mike',
-        'Tom',
-        'Dick',
-        'Harry',
-        'Larry',
-        'Joe',
-        'John',
-        'Paul',
-        'George',
-        'Ringo',
-        'Pete',
-        'Stuart',
-        'Brian',
-        'Ron',
-        'Jim',
-        'Bill',
-        'Jack',
-        'Joe',
-        'Mike',
-        'Tom',
-        'Dick',
-        'Harry',
-        'Larry']
-    # pick one of these randomly
-    name = names[random.randint(0, len(names) - 1)] # numero entre 0 y 19
-    context = {
-        'nombre_seleccionado': name,
-        'cantidad_de_nombres': len(names),
-        'lista_nombres': names
-    }
-    return render(request, 'weather/sample_template.html', context) 
+class SampleView(View):
+    def get(self,request):
+        names = [
+            'John',
+            'Paul',
+            'George',
+            'Ringo',
+            'Pete',
+            'Stuart',
+            'Brian',
+            'Ron',
+            'Jim',
+            'Bill',
+            'Jack',
+            'Joe',
+            'Mike',
+            'Tom',
+            'Dick',
+            'Harry',
+            'Larry',
+            'Joe',
+            'John',
+            'Paul',
+            'George',
+            'Ringo',
+            'Pete',
+            'Stuart',
+            'Brian',
+            'Ron',
+            'Jim',
+            'Bill',
+            'Jack',
+            'Joe',
+            'Mike',
+            'Tom',
+            'Dick',
+            'Harry',
+            'Larry']
+        # pick one of these randomly
+        name = names[random.randint(0, len(names) - 1)] # numero entre 0 y 19
+        context = {
+            'nombre_seleccionado': name,
+            'cantidad_de_nombres': len(names),
+            'lista_nombres': names
+        }
+        return render(request, 'weather/sample_template.html', context) 
+
+class VistaPrueba(View):     
+    def get(self, resquest):
+        return HttpResponse('Esta es una prueba vista')
+    
+    def post(self, request):
+        print(request.POST)
     
     
