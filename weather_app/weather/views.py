@@ -20,7 +20,7 @@ class IndexPrueba(View):
             'jose']
         name = names[random.randint(0, len(names) - 1)]
         context = {
-        'nombre_seleccionado':name
+            'nombre_seleccionado':name
         }
         return render(request, 'weather/vista1.html',context)
     
