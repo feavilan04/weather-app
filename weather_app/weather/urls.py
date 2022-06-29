@@ -12,5 +12,6 @@ urlpatterns = [
     path('pagina4-view', views.VistaCuatro.as_view(), name='pagina4_view'),
     path('pagina5-view', views.VistaCinco.as_view(), name='pagina5_view'),
     path('sample-view', views.SampleView.as_view(), name='sample_view'),
-    path('class-view', views.VistaPrueba.as_view(), name='class_view')
+    path('class-view', views.VistaPrueba.as_view(), name='class_view'),
+    path('post-view',views.VistaPost.as_view(), name='post_view')
 ]

@@ -222,10 +222,17 @@ class SampleView(View):
         return render(request, 'weather/sample_template.html', context) 
 
 class VistaPrueba(View):     
-    def get(self, resquest):
+    def get(self, request):
         return HttpResponse('Esta es una prueba vista')
     
     def post(self, request):
         print(request.POST)
     
     
+class VistaPost(View):
+    def get(self, request):
+        return render(request, 'weather/vistapost.html')
+    
+    def post(self, request):
+        print(request.POST, flush=True)
+        return HttpResponse('Formulario Diligenciado')

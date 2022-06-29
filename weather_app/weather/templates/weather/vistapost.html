@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+ .button {
+      background-color: #008CBA;
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+    }    
+    
+</style>
+</head>
+<body>
+
+<h1>Formulario De Registro</h1>
+
+<form action="" method="post">
+    {% csrf_token %} 
+  <label for="primernombre">Primer Nombre:</label>
+  <input type="text" id="primernombre" name="primernombre"><br><br>
+  <label for="segundonombre">Segundo Nombre:</label>
+  <input type="text" id="segundonombre" name="segundonombre"><br><br>
+  <label for="primerapellido">Primer Apellido:</label>
+  <input type="text" id="primerapellido" name="primerapellido"><br><br>
+  <label for="segundoapellido">Segundo Apellido:</label>
+  <input type="text" id="segundoapellido" name="segundoapellido"><br><br>
+
+  <p>Seleciona El Tipo De Documento:</p>
+  <input type="radio" id="registro" name="tipo_documento" value="REGISTRO">
+  <label for="registro">Registro Civil De Nacimiento</label><br>
+  <input type="radio" id="tarjeta" name="tipo_documento" value="TARJETA">
+  <label for="tarjeta">Tarjeta De Indentidad</label><br>
+  <input type="radio" id="cedula" name="tipo_documento" value="CEDULA">
+  <label for="cedula">Cedula</label><br>
+  <input type="radio" id="tarjetae" name="tipo_documento" value="TARJETAE">
+  <label for="tarjetae">Tarjeta De Extranjeria</label><br>
+  <input type="radio" id="cedulae" name="tipo_documento" value="CEDULAE">
+  <label for="cedulae">Cedula De Extranjeria</label><br>
+  <input type="radio" id="pasaporte" name="tipo_documento" value="PASAPORTE">
+  <label for="pasaporte">Pasaporte</label><br><br>
+
+  <label for="numeroIdentidad">Numero de identidad</label>
+  <input type="number" id="numeroIdentidad" name="numeroIdentidad"><br><br>
+  <label for="email">Correo Electronico:</label>
+  <input type="email" id="email" name="email"><br><br>
+  <button class="button">Enviar</button>
+</form>
+
+</body>
+</html>
