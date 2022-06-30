@@ -53,7 +53,7 @@ class PersonasViaje(models.Model):
 class InscripcionJuegosMesa(models.Model):
     nombre = models.CharField(max_length=25)
     apellido = models.CharField(max_length=25)
-    documento = models.IntegerField(max_length=25)
+    documento = models.IntegerField()
 
 class JuegosDeMesa(models.Model):
     jugadorm = models.CharField(InscripcionJuegosMesa, on_delete=models.CASCADE)
@@ -63,7 +63,7 @@ class JuegosDeMesa(models.Model):
 class AnimalesZoologico(models.Model): 
     nombre = models.CharField(max_length=25)
     lugar_de_origen = models.CharField(max_length=25)
-    cantidad = models.IntegerField(max_length=25)
+    cantidad = models.IntegerField()
     fecha_ingreso = models.DateField()
 
 
