@@ -108,7 +108,7 @@ class Registro(models.Model):
     correo = models.EmailField()
 
 
-class FechaCumpleaños(models.Model):
+class FechaCumpleannos(models.Model):
     nombre_completo = models.CharField(max_length=25)
     fecha= models.DateField()
     mensaje_cumple = models.TextField(max_length=200)
