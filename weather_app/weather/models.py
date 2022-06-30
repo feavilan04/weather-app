@@ -1,6 +1,3 @@
-from mailbox import NoSuchMailboxError
-from re import M
-from statistics import mode
 from django.db import models
 
 # Create your models here.
@@ -28,7 +25,7 @@ class Cantante(models.Model):
     apellido = models.CharField(max_length=25)
 
 class Genero(models.Model):
-    cantante = models.CharField(Cantante, on_delete=models.CASCADE)
+    cantante = models.ForeignKey(Cantante, on_delete=models.CASCADE)
     generom = models.CharField(max_length=25)
     
 
@@ -39,7 +36,7 @@ class Estudiante(models.Model):
     segundo_apellido = models.CharField(max_length=25)
 
 class Materias(models.Model):
-    estudiante =models.CharField(Estudiante, on_delete=models.PROTECT)
+    estudiante =models.ForeignKey(Estudiante, on_delete=models.PROTECT)
     grado =models.CharField(max_length=25)
     materias_reprobadas = models.IntegerField()
 
@@ -56,7 +53,7 @@ class InscripcionJuegosMesa(models.Model):
     documento = models.IntegerField()
 
 class JuegosDeMesa(models.Model):
-    jugadorm = models.CharField(InscripcionJuegosMesa, on_delete=models.CASCADE)
+    jugadorm = models.ForeignKey(InscripcionJuegosMesa, on_delete=models.CASCADE)
     juegos_disponibles = models.CharField(max_length=40)
 
 
@@ -77,7 +74,7 @@ class ObjetosEncontrados(models.Model):
     nombre_objeto = models.CharField(max_length=25)
 
 class DescripcionDeObjetosEncontrados(models.Model):
-    objeto = models.CharField(ObjetosEncontrados, on_delete=models.PROTECT)
+    objeto = models.ForeignKey(ObjetosEncontrados, on_delete=models.PROTECT)
     descripcion_estado_de_objeto = models.TextField(max_length=200)
     
 
@@ -85,7 +82,7 @@ class Celulares(models.Model):
     marca_celular =models.CharField(max_length=25)
 
 class Precios(models.Model):
-    celular =models.CharField(Celulares, on_delete=models.CASCADE)
+    celular =models.ForeignKey(Celulares, on_delete=models.CASCADE)
     precios_sugeridos= models.URLField()
 
 class Ventas(models.Model):
@@ -107,7 +104,7 @@ class RegistroUsuario(models.Model):
     documento = models.IntegerField()
 
 class Registro(models.Model):
-    usuario = models.CharField(RegistroUsuario, on_delete=models.PROTECT)
+    usuario = models.ForeignKey(RegistroUsuario, on_delete=models.PROTECT)
     correo = models.EmailField()
 
 
