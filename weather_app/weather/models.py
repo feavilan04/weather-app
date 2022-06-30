@@ -1,3 +1,4 @@
+from mailbox import NoSuchMailboxError
 from re import M
 from statistics import mode
 from django.db import models
@@ -80,4 +81,42 @@ class DescripcionDeObjetosEncontrados(models.Model):
     descripcion_estado_de_objeto = models.TextField(max_length=200)
     
 
+class Celulares(models.Model):
+    marca_celular =models.CharField(max_length=25)
 
+class Precios(models.Model):
+    celular =models.CharField(Celulares, on_delete=models.CASCADE)
+    precios_sugeridos= models.URLField()
+
+class Ventas(models.Model):
+    producto =models.CharField(max_length=25)
+    cantidad =models.IntegerField()
+    hora_fecha=models.DateTimeField()
+
+class VentaVideojuegos(models.Model):
+    nombre_juego=models.CharField(max_length=45)
+    precio =models.FloatField()
+
+class VentaViajes(models.Model):
+    destino = models.CharField(max_length=25)
+    valor_viaje =models.FloatField()
+    descuento = models.BooleanField()
+    
+class RegistroUsuario(models.Model):
+    nombre_usuario=models.CharField(max_length=25)
+    documento = models.IntegerField()
+
+class Registro(models.Model):
+    usuario = models.CharField(RegistroUsuario, on_delete=models.PROTECT)
+    correo = models.EmailField()
+
+
+class FechaCumpleaños(models.Model):
+    nombre_completo = models.CharField(max_length=25)
+    fecha= models.DateField()
+    mensaje_cumple = models.TextField(max_length=200)
+
+class Reservaciones(models.Model):
+    nombres_completos =models.CharField(max_length=100)
+    documento =models.IntegerField()
+    fecha_reservacion =models.DateField()
