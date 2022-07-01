@@ -11,22 +11,21 @@ class City(models.Model):
         verbose_name_plural = 'cities'
 
 
+class NombreDeporte(models.Model):
+    deporte = models.CharField(max_length=100)
+    
 class Jugador(models.Model):
-    nombre = models.CharField(max_length=20)
-    apellido = models.CharField(max_length=20)
+    deporte_que_practica = models.ForeignKey(NombreDeporte, on_delete=models.PROTECT)
+    nombre_completo_jugador = models.CharField(max_length=20)
 
-class Deporte(models.Model):
-    jugador = models.ForeignKey(Jugador, on_delete=models.PROTECT)
-    deporte_practica = models.CharField(max_length=100)
-
-
-class Cantante(models.Model):
-    nombre = models.CharField(max_length=25)
-    apellido = models.CharField(max_length=25)
 
 class Genero(models.Model):
-    cantante = models.ForeignKey(Cantante, on_delete=models.CASCADE)
-    generom = models.CharField(max_length=25)
+    musica = models.CharField(max_length=25)
+
+class Cantante(models.Model):
+    genero = models.ForeignKey(Genero, on_delete=models.CASCADE)
+    nombre = models.CharField(max_length=25)
+    apellido = models.CharField(max_length=25)
     
 
 class Estudiante(models.Model):
