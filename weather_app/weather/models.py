@@ -84,6 +84,7 @@ class Precios(models.Model):
     celular =models.ForeignKey(Celulares, on_delete=models.CASCADE)
     precios_sugeridos= models.URLField()
 
+
 class Ventas(models.Model):
     producto =models.CharField(max_length=25)
     cantidad =models.IntegerField()
@@ -102,7 +103,7 @@ class RegistroUsuario(models.Model):
     nombre_usuario=models.CharField(max_length=25)
     documento = models.IntegerField()
 
-class Registro(models.Model):
+class RegistroUs(models.Model):
     usuario = models.ForeignKey(RegistroUsuario, on_delete=models.PROTECT)
     correo = models.EmailField()
 
