@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.conf import settings
 import requests
-from .models import City
+from .models import AnimalesZoologico, Cantante, Celulares, City, DescripcionDeObjetosEncontrados, Estudiante, FechaCumpleannos, InscripcionJuegosMesa, JuegosDeMesa, Jugador, Materias, NombreDeporte, Genero, ObjetosEncontrados, PersonasViaje, Precios, Registro, RegistroUs, RegistroUsuario, Reservaciones, VentaViajes, VentaVideojuegos, Ventas
 from .forms import CityForm
 from django.views import View
 import random
@@ -222,10 +222,147 @@ class SampleView(View):
         return render(request, 'weather/sample_template.html', context) 
 
 class VistaPrueba(View):     
-    def get(self, resquest):
+    def get(self, request):
         return HttpResponse('Esta es una prueba vista')
     
     def post(self, request):
         print(request.POST)
     
-    
+class InsercionModelos(View):
+    def get(self, request):
+        nombre_deporte = NombreDeporte()
+        nombre_deporte.deporte="futbol"
+        nombre_deporte.save()
+
+        leonel_messi = Jugador()
+        leonel_messi.deporte_que_practica=nombre_deporte
+        leonel_messi.nombre_completo_jugador="Leonel Messi"
+        leonel_messi.save()
+
+
+        genero = Genero()
+        genero.musica="Salsa"
+        genero.save()
+
+        nombrecantante = Cantante()
+        nombrecantante.genero=genero
+        nombrecantante.nombre="Maelo"
+        nombrecantante.apellido="Ruiz"
+        nombrecantante.save()
+
+        estudiante = Estudiante()
+        estudiante.primer_nombre="Luis"
+        estudiante.segundo_nombre="Carlos"
+        estudiante.primer_apellido="Parra"
+        estudiante.segundo_apellido="Cepeda"
+        estudiante.save()
+
+        materia_reprobada=Materias()
+        materia_reprobada.estudiante=estudiante
+        materia_reprobada.grado="Once"
+        materia_reprobada.materias_reprobadas=3   
+
+
+        persona_viaje= PersonasViaje()
+        persona_viaje.nombre="Julio"
+        persona_viaje.apellido= "Perez"
+        persona_viaje.destino="Medellin"
+        persona_viaje.plata_abonada= 2000000
+        persona_viaje.save()
+
+
+        inscripcionjuegosmesa = InscripcionJuegosMesa()
+        inscripcionjuegosmesa.nombre="Camilo"
+        inscripcionjuegosmesa.apellido="Herrera"
+        inscripcionjuegosmesa.documento= 2588452254
+        inscripcionjuegosmesa.save()
+
+        juegomesa=JuegosDeMesa()
+        juegomesa.jugadorm=inscripcionjuegosmesa
+        juegomesa.juegos_disponibles= 2
+        juegomesa.save()
+
+
+
+        animaleszoologico = AnimalesZoologico()
+        animaleszoologico.nombre="Leon"
+        animaleszoologico.lugar_de_origen="La Selva"
+        animaleszoologico.cantidad= 2
+        animaleszoologico.fecha_ingreso= datetime.date(2022, 5, 20)
+        animaleszoologico.save()
+
+
+
+        regitro = Registro()
+        regitro.nombre_completo = "Felipe Vera"
+        regitro.documento = 123258561
+        regitro.hora_de_llegada = datetime.time(6,30,00)
+        regitro.fecha = datetime.date(2022, 5, 20)
+        regitro.save()
+
+
+        objetosencontrados = ObjetosEncontrados()
+        objetosencontrados.nombre_objeto="silla"
+        objetosencontrados.save()
+
+        busqueda_objetos = DescripcionDeObjetosEncontrados()
+        busqueda_objetos.objeto=objetosencontrados
+        busqueda_objetos.descripcion_estado_de_objeto="Se ecuentra sin una pata"
+        busqueda_objetos.save()
+
+
+
+        celular = Celulares()
+        celular.marca_celular="SAMSUNG"
+        celular.save()
+
+        valorsugerido = Precios()
+        valorsugerido.celular=celular
+        valorsugerido.precios_sugeridos="https://shop.samsung.com.co"
+
+        ventas =Ventas()
+        ventas.producto="azucar"
+        ventas.cantidad= 2
+        ventas.hora_fecha= datetime.datetime(2022, 5, 20, 00,00,00)
+        ventas.save()
+
+
+        ventavideojuegos = VentaVideojuegos()
+        ventavideojuegos.nombre_juego="free fire"
+        ventavideojuegos.precio=3000000
+        ventavideojuegos.save()
+
+        ventaviajes = VentaViajes()
+        ventaviajes.destino="San Andres"
+        ventaviajes.valor_viaje= 50000000
+        ventaviajes.descuento=True
+        ventaviajes.save()
+
+
+        regitrousuario = RegistroUsuario()
+        regitrousuario.nombre_usuario="Cielo"
+        regitrousuario.documento=123456789
+        regitrousuario.save()
+
+        usuarios = RegistroUs()
+        usuarios.usuario=regitrousuario
+        usuarios.correo="cielo1235@gmail.com"
+        usuarios.save()
+        
+
+        fechacumpleannos=FechaCumpleannos()
+        fechacumpleannos.nombre_completo="Celia Parra"
+        fechacumpleannos.fecha= datetime.date(2022, 5, 20)
+        fechacumpleannos.mensaje_cumple="feliz cumpleannos que la pase muy bien "
+        fechacumpleannos.save()
+
+
+        reservaciones =Reservaciones()
+        reservaciones.nombres_completos="Carlos Perez"
+        reservaciones.documento=123456974
+        reservaciones.fecha_reservacion= datetime.date(2022, 5, 20)
+        reservaciones.save()
+        
+        return HttpResponse('Esta es una prueba vista')
+
+
