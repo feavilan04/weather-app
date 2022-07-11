@@ -1,6 +1,7 @@
 import datetime
 from multiprocessing import context
 import random
+from statistics import correlation
 import time
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -231,12 +232,29 @@ class VistaPrueba(View):
     
 class VistaPostFormulario(View):
     def get(self, request):
-        
         return render(request, 'weather/vistapost.html')
     
     def post(self, request):
+        request.method == 'POST'
+        primernombre= request.POST["primer_nombre"]
+        segundonombre = request.POST["segundo_nombre"]
+        primerapellido = request.POST["primer_apellido"]
+        segundoapellido = request.POST["segundo_apellido"]
+        lista = request.POST.getlist('tipo_documento[]')
+        numeroidentidad = request.POST["numeroIdentidad"]
+        correoelectronico = request.POST["email"]
+        dict = {
+            'primernombre': primernombre,
+            'segundonombre': segundonombre,
+            'primerapellido': primerapellido,
+            'segundoapellido': segundoapellido,
+            'lista':lista,
+            'numeroidentidad': numeroidentidad,
+            'correoelectronico': correoelectronico
+         
+      }
         print(request.POST, flush=True)
-        return HttpResponse('Formulario Diligenciado')
+        return render(request, 'weather/vistaformulario.html', dict, {'lista':lista})
 
 class InsercionModelos(View):
     def get(self, request):
