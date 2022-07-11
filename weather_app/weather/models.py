@@ -137,7 +137,11 @@ class RegistroFormulario(models.Model):
         (CEDULAE, 'Cedula Extranjeria'),
         (PASAPORTE, 'Pasaporte'),
     ]
-    
+    document_type =models.CharField(
+        max_length=25,
+        choices=DOCUMENT_TYPE,
+        default="R",    
+    )
     nuemoro_de_documento=models.IntegerField(max_length=25)
     correo=models.EmailField()
     
