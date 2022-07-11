@@ -229,14 +229,15 @@ class VistaPrueba(View):
         print(request.POST)
     
     
-class VistaPost(View):
+class VistaPostFormulario(View):
     def get(self, request):
+        
         return render(request, 'weather/vistapost.html')
     
     def post(self, request):
         print(request.POST, flush=True)
         return HttpResponse('Formulario Diligenciado')
-        
+
 class InsercionModelos(View):
     def get(self, request):
         nombre_deporte = NombreDeporte()
@@ -375,3 +376,4 @@ class InsercionModelos(View):
         return HttpResponse('Esta es una prueba vista')
 
 
+                
