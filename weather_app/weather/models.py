@@ -124,11 +124,11 @@ class RegistroFormulario(models.Model):
     primer_apellido =models.CharField(max_length=25)
     segundo_apellido=models.CharField(max_length=25)
     REGISTRO = 'R'
-    TARJETA = 'T'
+    TARJETA = 'TI'
     CEDULA = 'CC'
     TARJETAE = 'TE'
     CEDULAE = 'CE'
-    PASAPORTE = 'P'
+    PASAPORTE = 'PA'
     DOCUMENT_TYPE = [
         (REGISTRO, 'Registro'),
         (TARJETA, 'Tarjeta De Identidad'),
@@ -142,6 +142,6 @@ class RegistroFormulario(models.Model):
         choices=DOCUMENT_TYPE,
         default="R",    
     )
-    nuemoro_de_documento=models.IntegerField(max_length=25)
+    numero_de_documento=models.IntegerField(max_length=25)
     correo=models.EmailField()
     

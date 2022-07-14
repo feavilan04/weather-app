@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.conf import settings
 import requests
-from .models import AnimalesZoologico, Cantante, Celulares, City, DescripcionDeObjetosEncontrados, Estudiante, FechaCumpleannos, InscripcionJuegosMesa, JuegosDeMesa, Jugador, Materias, NombreDeporte, Genero, ObjetosEncontrados, PersonasViaje, Precios, Registro, RegistroUs, RegistroUsuario, Reservaciones, VentaViajes, VentaVideojuegos, Ventas
+from .models import AnimalesZoologico, Cantante, Celulares, City, DescripcionDeObjetosEncontrados, Estudiante, FechaCumpleannos, InscripcionJuegosMesa, JuegosDeMesa, Jugador, Materias, NombreDeporte, Genero, ObjetosEncontrados, PersonasViaje, Precios, Registro, RegistroUs, RegistroUsuario, Reservaciones, VentaViajes, VentaVideojuegos, Ventas, RegistroFormulario
 from .forms import CityForm
 from django.views import View
 import random
@@ -231,27 +231,41 @@ class VistaPrueba(View):
     
 class VistaPostFormulario(View):
     def get(self, request):
+        
         return render(request, 'weather/vistapost.html')
     
     def post(self, request):
-        primernombre= request.POST["primer_nombre"]
-        segundonombre = request.POST["segundo_nombre"]
-        primerapellido = request.POST["primer_apellido"]
-        segundoapellido = request.POST["segundo_apellido"]
-        lista = request.POST.getlist('tipo_documento[]')
-        numeroidentidad = request.POST["numeroIdentidad"]
-        correoelectronico = request.POST["email"]
+        primernombre= request.POST.get ('primer_nombre')
+        segundonombre = request.POST.get('segundo_nombre')
+        primerapellido = request.POST.get('primer_apellido')
+        segundoapellido = request.POST.get('segundo_apellido')
+        lista = request.POST.get('tipo_documento')
+        numeroidentidad = request.POST.get('numeroIdentidad')
+        correoelectronico = request.POST.get('email')
+
+        nuevo_registro=RegistroFormulario()
+        nuevo_registro.primer_nombre=primernombre
+        nuevo_registro.segundo_nombre=segundonombre
+        nuevo_registro.primer_apellido=primerapellido
+        nuevo_registro.segundo_apellido=segundoapellido
+        nuevo_registro.document_type=lista
+        nuevo_registro.numero_de_documento=numeroidentidad
+        nuevo_registro.correo=correoelectronico
+        nuevo_registro.save()
+        
+        
         dict = {
-            'primernombre': primernombre,
-            'segundonombre': segundonombre,
-            'primerapellido': primerapellido,
-            'segundoapellido': segundoapellido,
-            'lista':lista,
-            'numeroidentidad': numeroidentidad,
-            'correoelectronico': correoelectronico
-         
-      }
-        print(request.POST, flush=True)
+            'primer_nombre': primernombre,
+            'segundo_nombre': segundonombre,
+            'primer_apellido': primerapellido,
+            'segundo_apellido': segundoapellido,
+            'tipo_documento':lista,
+            'numeroIdentidad': numeroidentidad,
+            'email': correoelectronico
+        }
+        
+        
+        print(request.POST.get ('primer_apellido'), flush=True)
         return render(request, 'weather/vistaformulario.html', dict )
 
 class InsercionModelos(View):
@@ -392,4 +406,3 @@ class InsercionModelos(View):
         return HttpResponse('Esta es una prueba vista')
 
 
-                
