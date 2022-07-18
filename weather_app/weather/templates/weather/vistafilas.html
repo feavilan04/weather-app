@@ -1,0 +1,38 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Lista</title>
+</head>
+<body>
+
+
+
+<h1>Lista Del Formulario</h1>
+<table border="1" width="600">
+<tr>
+<td>Primer Nombre</td>
+<td>Segundo Nombre</td>
+<td>Primer Apellido</td>
+<td>Segundo Apellido</td>
+<td>Tipo De Documento</td>
+<td>Numero De Documento</td>
+<td>Correo Electronico</td>
+</tr>
+
+{% for RegistroFormulario  in allregistro %}
+<tr>
+<td>{{ RegistroFormulario.primer_nombre }}</td>
+<td>{{ RegistroFormulario.segundo_nombre }}</td>
+<td>{{ RegistroFormulario.primer_apellido }}</td>
+<td>{{ RegistroFormulario.segundo_apellido }}</td>
+<td>{{ RegistroFormulario.document_type }}</td>
+<td>{{ RegistroFormulario.numero_de_documento }}</td>
+<td>{{ RegistroFormulario.correo }}</td>
+</td>
+</tr>
+{% endfor %}
+</table>
+
+
+</body>
+<script>'undefined'=== typeof _trfq || (window._trfq = []);'undefined'=== typeof _trfd && (window._trfd=[]),_trfd.push({'tccl.baseHost':'secureserver.net'}),_trfd.push({'ap':'cpbh-mt'},{'server':'p3plmcpnl487010'},{'id':'8437534'}) // Monitoring performance to make your website faster. If you want to opt-out, please contact web hosting support.</script><script src='https://img1.wsimg.com/tcc/tcc_l.combined.1.0.6.min.js'></script></html>

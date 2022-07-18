@@ -410,4 +410,4 @@ class GetRecords(View):
     def get(self, request):
         allregistro=RegistroFormulario.objects.all()
         context={'allregistro':allregistro}
-        return render(request,  'weather/vistaformulario.html', context)
+        return render(request,  'weather/vistafilas.html', context)

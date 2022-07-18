@@ -14,6 +14,7 @@ urlpatterns = [
     path('sample-view', views.SampleView.as_view(), name='sample_view'),
     path('class-view', views.VistaPrueba.as_view(), name='class_view'),
     path('post-view',views.VistaPostFormulario.as_view(), name='post_view'),
-    path('prueba-relaciones', views.InsercionModelos.as_view(), name='prueba_relaciones')
+    path('prueba-relaciones', views.InsercionModelos.as_view(), name='prueba_relaciones'),
+    path('filas', views.GetRecords.as_view(), name='filas')
     
 ]
