@@ -240,7 +240,7 @@ class VistaPostFormulario(View):
         primerapellido = request.POST.get('primer_apellido')
         segundoapellido = request.POST.get('segundo_apellido')
         lista = request.POST.get('tipo_documento')
-        numeroidentidad = request.POST.get('numeroIdentidad')
+        numeroidentidad = request.POST.get('numero_Identidad')
         correoelectronico = request.POST.get('email')
 
         nuevo_registro=RegistroFormulario()
@@ -260,7 +260,7 @@ class VistaPostFormulario(View):
             'primer_apellido': primerapellido,
             'segundo_apellido': segundoapellido,
             'tipo_documento':lista,
-            'numeroIdentidad': numeroidentidad,
+            'numero_Identidad': numeroidentidad,
             'email': correoelectronico
         }
         
@@ -406,3 +406,8 @@ class InsercionModelos(View):
         return HttpResponse('Esta es una prueba vista')
 
 
+class GetRecords(View):
+    def get(self, request):
+        allregistro=RegistroFormulario.objects.all()
+        context={'allregistro':allregistro}
+        return render(request,  'weather/vistaformulario.html', context)
