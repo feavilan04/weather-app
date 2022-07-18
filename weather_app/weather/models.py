@@ -117,3 +117,31 @@ class Reservaciones(models.Model):
     nombres_completos =models.CharField(max_length=100)
     documento =models.IntegerField()
     fecha_reservacion =models.DateField()
+
+class RegistroFormulario(models.Model):
+    primer_nombre = models.CharField(max_length=25)
+    segundo_nombre =models.CharField(max_length=25)
+    primer_apellido =models.CharField(max_length=25)
+    segundo_apellido=models.CharField(max_length=25)
+    REGISTRO = 'R'
+    TARJETA = 'TI'
+    CEDULA = 'CC'
+    TARJETAE = 'TE'
+    CEDULAE = 'CE'
+    PASAPORTE = 'PA'
+    DOCUMENT_TYPE = [
+        (REGISTRO, 'Registro'),
+        (TARJETA, 'Tarjeta De Identidad'),
+        (CEDULA, 'Cedula'),
+        (TARJETAE, 'Tarjeta Extranjeria'),
+        (CEDULAE, 'Cedula Extranjeria'),
+        (PASAPORTE, 'Pasaporte'),
+    ]
+    document_type =models.CharField(
+        max_length=25,
+        choices=DOCUMENT_TYPE,
+        default="R",    
+    )
+    numero_de_documento=models.IntegerField(max_length=25)
+    correo=models.EmailField()
+    
