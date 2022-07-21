@@ -254,6 +254,7 @@ class VistaPostFormulario(View):
         nuevo_registro.save()
         
         
+
         dict = {
             'primer_nombre': primernombre,
             'segundo_nombre': segundonombre,
@@ -266,7 +267,7 @@ class VistaPostFormulario(View):
         
         
         print(request.POST.get ('primer_apellido'), flush=True)
-        return render(request, 'weather/vistaformulario.html', dict )
+        return redirect('filas')
 
 class InsercionModelos(View):
     def get(self, request):
@@ -349,7 +350,7 @@ class InsercionModelos(View):
         busqueda_objetos.objeto=objetosencontrados
         busqueda_objetos.descripcion_estado_de_objeto="Se ecuentra sin una pata"
         busqueda_objetos.save()
-
+        
 
 
         celular = Celulares()
