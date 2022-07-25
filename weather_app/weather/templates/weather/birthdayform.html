@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+ .button {
+      background-color: #008CBA;
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+    }    
+    
+</style>
+</head>
+<body>
+
+<h1>Birthday Message</h1>
+
+<form action="" method="post">
+    {% csrf_token %} 
+  <label for="firstname">First Name:</label>
+  <input type="text" id="firstname" name="first_name"><br><br>
+  <label for="secondname">Second Name:</label>
+  <input type="text" id="secondname" name="second_name"><br><br>
+  <label for="firstsurname">First Surname:</label>
+  <input type="text" id="firstsurname" name="first_surname"><br><br>
+  <label for="secondsurname">Second Surname:</label>
+  <input type="text" id="secondsurname" name="second_surname"><br><br>
+  <label for="birthday">Birthday:</label>
+  <input type="date" id="birthday" name="birth_day"><br><br>
+  <label for="city">City:</label>
+  <input type="text" id="city" name="city"><br><br>
+  
+  <label for="languagee">Select The Language To Send The Message:</label>
+
+  <select name="language" id="language">
+    <option value="volvo">Chinese</option>
+    <option value="saab">Dutch</option>
+    <option value="mercedes">English</option>
+    <option value="audi">French</option>
+    <option value="volvo">German</option>
+    <option value="saab">Italian</option>
+    <option value="mercedes">Japanese</option>
+    <option value="audi">Latin</option>
+    <option value="volvo">Norwegian</option>
+    <option value="saab">Portuguese</option>
+    <option value="mercedes">Russian</option>
+    <option value="audi">Spanish</option>
+    <option value="volvo">Thai</option>
+    <option value="saab">Ukrainian</option>
+    <option value="mercedes">Vietnamese</option>
+  </select><br><br>  
+
+  <label for="message">Message:</label>
+  <input type="text" id="message" name="message"><br><br>
+
+  <button class="button">Enviar</button>
+</form>
+
+</body>
+</html>

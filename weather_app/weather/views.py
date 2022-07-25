@@ -1,4 +1,5 @@
 import datetime
+from email import message
 from multiprocessing import context
 import random
 import time
@@ -6,7 +7,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.conf import settings
 import requests
-from .models import AnimalesZoologico, Cantante, Celulares, City, DescripcionDeObjetosEncontrados, Estudiante, FechaCumpleannos, InscripcionJuegosMesa, JuegosDeMesa, Jugador, Materias, NombreDeporte, Genero, ObjetosEncontrados, PersonasViaje, Precios, Registro, RegistroUs, RegistroUsuario, Reservaciones, VentaViajes, VentaVideojuegos, Ventas, RegistroFormulario
+from .models import AnimalesZoologico, BirthdayRegistrationForm, Cantante, Celulares, City, DescripcionDeObjetosEncontrados, Estudiante, FechaCumpleannos, InscripcionJuegosMesa, JuegosDeMesa, Jugador, Materias, NombreDeporte, Genero, ObjetosEncontrados, PersonasViaje, Precios, Registro, RegistroUs, RegistroUsuario, Reservaciones, VentaViajes, VentaVideojuegos, Ventas, RegistroFormulario
 from .forms import CityForm
 from django.views import View
 import random
@@ -411,3 +412,45 @@ class GetRecords(View):
         allregistro=RegistroFormulario.objects.all()
         context={'allregistro':allregistro}
         return render(request,  'weather/vistafilas.html', context)
+
+class BirthdayForm(View):
+    def get(self, request):
+        
+        return render(request, 'weather/birthdayform.html')
+    
+    def post(self, request):
+        firstname= request.POST.get ('first_name')
+        secondname = request.POST.get('second_name')
+        firstsurname = request.POST.get('first_surname')
+        secondsurname = request.POST.get('second_surname')
+        birthday =request.POST.get('birth_day')
+        city = request.POST.get('city')
+        language = request.POST.get('language')
+        message = request.POST.get('message')
+
+        new_message=BirthdayRegistrationForm()
+        new_message.first_name=firstname
+        new_message.second_name=secondname
+        new_message.first_surname=firstsurname
+        new_message.second_surname=secondsurname
+        new_message.birth_day=birthday
+        new_message.city=city
+        new_message.language=language
+        new_message.message=message
+        new_message.save()
+        
+        
+        dict = {
+            'first_name': firstname,
+            'secondname': secondname,
+            'firstsurname': firstsurname,
+            'secondsurname': secondsurname,
+            'birth_day': birthday,
+            'city': city,
+            'language': language,
+            'message':message
+        }
+        
+        
+        print(request.POST.get ('first_name'), flush=True)
+        return render(request, 'weather/birthdayform.html', dict )

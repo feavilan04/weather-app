@@ -144,4 +144,50 @@ class RegistroFormulario(models.Model):
     )
     numero_de_documento=models.IntegerField(max_length=25)
     correo=models.EmailField()
-    
+
+
+class BirthdayRegistrationForm(models.Model):
+    first_name = models.CharField(max_length=25)
+    second_name =models.CharField(max_length=25)
+    first_surname  = models.CharField(max_length=25)
+    second_surname =models.CharField(max_length=25)
+    birth_day=models.DateField()
+    city=models.CharField(max_length=25)
+    CHINESE = 'CHI'
+    DUTCH = 'DUT'
+    ENGLISH = 'EN'
+    FRENCH = 'FRE'
+    GERMAN = 'GER'
+    ITALIAN = 'ITA'
+    JAPANESE = 'JAP'
+    LATIN = 'LAT'
+    NORWEGIAN = 'NOR'
+    PORTUGUESE= 'POR'
+    RUSSIAN = 'RUS'
+    SPANISH = 'SPA'  
+    THAI = 'THA'
+    UKRAINIAN = 'UKR'
+    VIETNAMESE = 'VIE'
+    LANGUAGE = [
+        (CHINESE, 'Chinese'),
+        (DUTCH, 'Duth'),
+        (ENGLISH, 'English'),
+        (FRENCH, 'French'),
+        (GERMAN, 'German'),
+        (ITALIAN, 'Italian'),
+        (JAPANESE, 'Japanese'),
+        (LATIN, 'Latin'),
+        (NORWEGIAN, 'Norwegian'),
+        (PORTUGUESE, 'Portuguese'),
+        (RUSSIAN, 'Rusian'),
+        (SPANISH, 'Spanish'),
+        (THAI, 'THAI'),
+        (UKRAINIAN, 'Ukrainian'),
+        (VIETNAMESE, 'Vietnamese'),
+    ]
+    language =models.CharField(
+        max_length=25,
+        choices=LANGUAGE,
+        default="GER",    
+    )
+    message=models.TextField(max_length=200)
