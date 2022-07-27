@@ -181,7 +181,7 @@ class BirthdayRegistrationForm(models.Model):
         (PORTUGUESE, 'Portuguese'),
         (RUSSIAN, 'Rusian'),
         (SPANISH, 'Spanish'),
-        (THAI, 'THAI'),
+        (THAI, 'Thai'),
         (UKRAINIAN, 'Ukrainian'),
         (VIETNAMESE, 'Vietnamese'),
     ]
@@ -191,3 +191,11 @@ class BirthdayRegistrationForm(models.Model):
         default="GER",    
     )
     message=models.TextField(max_length=200)
+
+
+class NewRegistrationForm(models.Model):
+    first_name = models.CharField(max_length=25)
+    second_name =models.CharField(max_length=25)
+    first_surname  = models.CharField(max_length=25)
+    second_surname =models.CharField(max_length=25)
+    city=models.CharField(max_length=25)

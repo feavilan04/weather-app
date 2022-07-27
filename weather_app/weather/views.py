@@ -3,11 +3,12 @@ from email import message
 from multiprocessing import context
 import random
 import time
+from unicodedata import name
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.conf import settings
 import requests
-from .models import AnimalesZoologico, BirthdayRegistrationForm, Cantante, Celulares, City, DescripcionDeObjetosEncontrados, Estudiante, FechaCumpleannos, InscripcionJuegosMesa, JuegosDeMesa, Jugador, Materias, NombreDeporte, Genero, ObjetosEncontrados, PersonasViaje, Precios, Registro, RegistroUs, RegistroUsuario, Reservaciones, VentaViajes, VentaVideojuegos, Ventas, RegistroFormulario
+from .models import AnimalesZoologico, BirthdayRegistrationForm, Cantante, Celulares, City, DescripcionDeObjetosEncontrados, Estudiante, FechaCumpleannos, InscripcionJuegosMesa, JuegosDeMesa, Jugador, Materias, NewRegistrationForm, NombreDeporte, Genero, ObjetosEncontrados, PersonasViaje, Precios, Registro, RegistroUs, RegistroUsuario, Reservaciones, VentaViajes, VentaVideojuegos, Ventas, RegistroFormulario
 from .forms import CityForm
 from django.views import View
 import random
@@ -453,4 +454,49 @@ class BirthdayForm(View):
         
         
         print(request.POST.get ('first_name'), flush=True)
-        return render(request, 'weather/birthdayform.html', dict )
+        return redirect('list')
+
+
+class BirthdayListing(View):
+    def get(self, request):
+        allregistration=BirthdayRegistrationForm.objects.all()
+        context={'allregistration':allregistration}
+        return render(request,  'weather/list.html', context)
+
+
+
+class NewForm(View):
+    def get(self, request):
+        
+        return render(request, 'weather/newform.html')
+
+    def post(self, request):
+        firstname= request.POST.get('first_name')
+        secondname = request.POST.get('second_name')
+        firstsurname = request.POST.get('first_surname')
+        secondsurname = request.POST.get('second_surname')
+        city = request.POST.get('city')
+
+        names=NewRegistrationForm()
+        names.first_name=firstname
+        names.second_name=secondname
+        names.first_surname=firstsurname
+        names.second_surname=secondsurname
+        names.city=city
+        names.save()
+        
+        
+        dict = {
+            'first_name': firstname,
+            'secondname': secondname,
+            'firstsurname': firstsurname,
+            'secondsurname': secondsurname,
+            'city': city
+            
+        }
+        
+        
+        print(request.POST.get ('first_name'), flush=True)
+        return render(request, 'weather/newform.html', dict )
+
+    
