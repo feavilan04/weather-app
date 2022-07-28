@@ -8,7 +8,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.conf import settings
 import requests
-from .models import AnimalesZoologico, BirthdayRegistrationForm, Cantante, Celulares, City, DescripcionDeObjetosEncontrados, Estudiante, FechaCumpleannos, InscripcionJuegosMesa, JuegosDeMesa, Jugador, Materias, NewRegistrationForm, NombreDeporte, Genero, ObjetosEncontrados, PersonasViaje, Precios, Registro, RegistroUs, RegistroUsuario, Reservaciones, VentaViajes, VentaVideojuegos, Ventas, RegistroFormulario
+from .models import AnimalesZoologico, BirthdayRegistrationForm, Cantante, Celulares, City, Country, DescripcionDeObjetosEncontrados, Estudiante, FechaCumpleannos, InscripcionJuegosMesa, JuegosDeMesa, Jugador, Materias, NewRegistrationForm, NombreDeporte, Genero, ObjetosEncontrados, PersonasViaje, Precios, Registro, RegistroUs, RegistroUsuario, Reservaciones, VentaViajes, VentaVideojuegos, Ventas, RegistroFormulario
 from .forms import CityForm
 from django.views import View
 import random
@@ -499,4 +499,24 @@ class NewForm(View):
         print(request.POST.get ('first_name'), flush=True)
         return render(request, 'weather/newform.html', dict )
 
+class Countries(View):
+    def get(self, request):
+        return render(request, 'weather/countries.html')
+
+    def post(self, request):
+        countryname= request.POST.get('country_name')
+        telephoneindicative = request.POST.get('telephone_indicative')
+
+        names=Country()
+        names.country_name=countryname
+        names.telephone_indicative=telephoneindicative
+        names.save()
+        
+        dict = {
+            'country_name': countryname,
+            'telephone_indicative': telephoneindicative
+            
+        }
+        print(request.POST.get ('country_name'), flush=True)
+        return render(request, 'weather/countries.html', dict )
     

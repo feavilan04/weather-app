@@ -17,5 +17,6 @@ urlpatterns = [
     path('prueba-relaciones', views.InsercionModelos.as_view(), name='prueba_relaciones'),
     path('filas', views.GetRecords.as_view(), name='filas'),
     path('birthday-form', views.BirthdayForm.as_view(), name='birthday_form'),
-    path('list', views.BirthdayListing.as_view(), name='list')
+    path('list', views.BirthdayListing.as_view(), name='list'),
+    
 ]
