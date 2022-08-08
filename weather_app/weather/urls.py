@@ -18,5 +18,16 @@ urlpatterns = [
     path('filas', views.GetRecords.as_view(), name='filas'),
     path('birthday-form', views.BirthdayForm.as_view(), name='birthday_form'),
     path('list', views.BirthdayListing.as_view(), name='list'),
-    
+    path('countries', views.Countries.as_view(), name='countries'),
+    path('list-countries',views.CountriesListing.as_view(), name='list_countries'),
+    path('product', views.ProductForm.as_view(), name='product'),
+    path('list-product',views.ProductListing.as_view(), name='list_product'),
+    path('department', views.DepartmentForm.as_view(), name='department'),
+    path('list-department',views.DepartmentListing.as_view(), name='list_department'),
+    path('city', views.CitiesForm.as_view(), name='city'),
+    path('city-list', views.CityListing.as_view(), name='city_list'),
+    path('location', views.LocationForm.as_view(), name='location'),
+    path('location-list', views.LocationListing.as_view(), name='location_list'),
+    path('neighborhood', views.NeighborhoodForm.as_view(), name='neighborhood'),
+    path('neighborhood-list', views.NeighborhoodListing.as_view(), name='neighborhood_list')
 ]

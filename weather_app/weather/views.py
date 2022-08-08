@@ -8,7 +8,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.conf import settings
 import requests
-from .models import AnimalesZoologico, BirthdayRegistrationForm, Cantante, Celulares, City, Country, DescripcionDeObjetosEncontrados, Estudiante, FechaCumpleannos, InscripcionJuegosMesa, JuegosDeMesa, Jugador, Materias, NewRegistrationForm, NombreDeporte, Genero, ObjetosEncontrados, PersonasViaje, Precios, Registro, RegistroUs, RegistroUsuario, Reservaciones, VentaViajes, VentaVideojuegos, Ventas, RegistroFormulario
+from .models import AnimalesZoologico, BirthdayRegistrationForm, Cantante, Celulares, City, Country, Department, DescripcionDeObjetosEncontrados, Estudiante, FechaCumpleannos, FullCity, InscripcionJuegosMesa, JuegosDeMesa, Jugador, Materias, Neighborhood, NewRegistrationForm, NombreDeporte, Genero, ObjetosEncontrados, PersonasViaje, Precios, Product, Registro, RegistroUs, RegistroUsuario, Reservaciones, VentaViajes, VentaVideojuegos, Ventas, RegistroFormulario, Location
 from .forms import CityForm
 from django.views import View
 import random
@@ -518,5 +518,180 @@ class Countries(View):
             
         }
         print(request.POST.get ('country_name'), flush=True)
-        return render(request, 'weather/countries.html', dict )
+        return redirect('list_countries')
     
+class CountriesListing(View):
+    def get(self, request):
+        allcities=Country.objects.all()
+        context={'allcities':allcities}
+        return render(request,  'weather/listcities.html', context)
+
+class ProductForm(View):
+    def get(self, request):
+        countries=Country.objects.filter(id__gte =3)
+        context={
+            'countrieslist': countries
+        }
+
+
+
+        return render(request, 'weather/product.html', context)
+
+    def post(self, request):
+        country_id=request.POST.get('country')
+        productname= request.POST.get('product_name')
+        barcode = request.POST.get('barcode')
+        technology = request.POST.get('technology')
+        country_obj=Country.objects.get(id=country_id)
+        
+        
+        products=Product()
+        products.country=country_obj
+        products.product_name=productname
+        products.barcode=barcode
+        products.technology=technology
+        products.save()
+        
+        dict = {
+            'country': country,
+            'product_name': productname,
+            'barcode': barcode,
+            'technology': technology
+        }
+        print(request.POST.get ('country'), flush=True)
+        return redirect('list_product')
+
+class ProductListing(View):
+    def get(self, request):
+        allproduct=Product.objects.all()
+        context={'allproduct':allproduct}
+        return render(request,  'weather/listproduct.html', context)
+
+
+class DepartmentForm(View):
+    def get(self, request):
+        countries=Country.objects.all()
+        context={
+            'countrieslist': countries
+        }
+        return render(request, 'weather/department.html', context)
+
+    def post(self, request):
+        country_id=request.POST.get('country')
+        departmentname= request.POST.get('department_name')
+        population = request.POST.get('population')
+        country_obj=Country.objects.get(id=country_id)
+
+
+
+        departments=Department()
+        departments.country=country_obj
+        departments.department_name=departmentname
+        departments.population=population
+        departments.save()
+        
+        
+        print(request.POST.get ('country'), flush=True)
+        return redirect('list_department')
+
+class DepartmentListing(View):
+    def get(self, request):
+        department=Department.objects.all()
+        context={'department':department}
+        return render(request,  'weather/listdepartment.html', context)
+
+class CitiesForm(View):
+    def get(self, request):
+        departments=Department.objects.all()
+        context={
+            'departmentlist': departments
+        }
+        return render(request, 'weather/city.html', context)
+
+    def post(self, request):
+        department_id=request.POST.get('department')
+        city_name= request.POST.get('city_name')
+        population = request.POST.get('population')
+        airport = request.POST.get('airport')
+        boolean_airport = True if airport == 'on' else False
+        department_obj=Department.objects.get(id=department_id)
+        
+        
+        city=FullCity()
+        city.department=department_obj
+        city.city_name=city_name
+        city.population=population
+        city.airport=boolean_airport
+        city.save()
+        
+        print(request.POST.get ('department'), flush=True)
+        return redirect('city_list')
+
+class CityListing(View):
+    def get(self, request):
+        city=FullCity.objects.all()
+        context={'city':city}
+        return render(request,  'weather/listcity.html', context)
+
+class LocationForm(View):
+    def get(self, request):
+        cityy=FullCity.objects.all()
+        context={
+            'citylist': cityy
+        }
+        return render(request, 'weather/location.html', context)
+
+    def post(self, request):
+        cityy_id=request.POST.get('department')
+        city_name= request.POST.get('city_name')
+        population = request.POST.get('population')
+        city_obj=FullCity.objects.get(id=cityy_id)
+        
+        
+        location=Location()
+        location.city_location=city_obj
+        location.location_name=city_name
+        location.population=population
+        location.save()
+        
+        print(request.POST.get ('city_location'), flush=True)
+        return redirect('location_list')
+
+class LocationListing(View):
+    def get(self, request):
+        location=Location.objects.all()
+        context={'location':location}
+        return render(request,  'weather/listlocation.html', context)
+
+
+class NeighborhoodForm(View):
+    def get(self, request):
+        locations=Location.objects.all()
+        context={
+            'locationlist': locations
+        }
+        return render(request, 'weather/neighborhood.html', context)
+
+    def post(self, request):
+        location_id=request.POST.get('location_name')
+        neighborhood_name= request.POST.get('neighborhood_name')
+        population = request.POST.get('population')
+        location_obj=Location.objects.get(id=location_id)
+
+
+
+        departments=Neighborhood()
+        departments.location_name=location_obj
+        departments.neighborhood_name=neighborhood_name
+        departments.population=population
+        departments.save()
+        
+        
+        print(request.POST.get ('neighborhood_name'), flush=True)
+        return redirect('neighborhood_list')
+
+class NeighborhoodListing(View):
+    def get(self, request):
+        location=Location.objects.all()
+        context={'location':location}
+        return render(request,  'weather/listneighborhood.html', context)

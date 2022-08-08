@@ -1,5 +1,4 @@
 from django.db import models
-
 # Create your models here.
 class City(models.Model):
     name = models.CharField(max_length=25)
@@ -199,3 +198,38 @@ class NewRegistrationForm(models.Model):
     first_surname  = models.CharField(max_length=25)
     second_surname =models.CharField(max_length=25)
     city=models.CharField(max_length=25)
+
+
+class Country(models.Model):
+    country_name=models.CharField(max_length=25)
+    telephone_indicative = models.IntegerField()
+
+class Product(models.Model):
+    country=models.ForeignKey(Country, on_delete=models.CASCADE)
+    product_name=models.CharField(max_length=25)
+    barcode=models.CharField(max_length=30)
+    technology=models.BooleanField()
+   
+class Department(models.Model):
+    country=models.ForeignKey(Country, on_delete=models.CASCADE)
+    department_name=models.CharField(max_length=25)
+    population = models.IntegerField()
+
+
+class FullCity(models.Model):
+    department=models.ForeignKey(Department, on_delete=models.CASCADE)
+    city_name=models.CharField(max_length=25)
+    population = models.IntegerField()
+    airport = models.BooleanField()
+
+class Location(models.Model):
+    city_location=models.ForeignKey(City, on_delete=models.CASCADE)
+    location_name=models.CharField(max_length=25)
+    population = models.IntegerField()
+
+class Neighborhood(models.Model):
+    location_name=models.ForeignKey(City, on_delete=models.CASCADE)
+    neighborhood_name=models.CharField(max_length=25)
+    population = models.IntegerField()
+
+    

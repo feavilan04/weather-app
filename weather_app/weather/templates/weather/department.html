@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+ .button {
+      background-color: #008CBA;
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+    }    
+    
+</style>
+</head>
+<body>
+
+<h1>Departments</h1>
+
+<form action="" method="post">
+    {% csrf_token %} 
+    <label for="countryy">Select the country:</label>
+
+    <select name="country" id="country">
+    {% for Country  in countrieslist %}
+    <option value="{{Country.id}}">{{Country.country_name}}</option>
+    {% endfor %}
+    
+  </select><br><br>
+  <label for="departmentname">Department Name:</label>
+  <input type="text" id="departmentname" name="department_name"><br><br>
+  <label for="population">Population</label>
+  <input type="number" id="population" name="population"><br><br>
+  <button class="button">Enviar</button>
+</form>
+
+</body>
+</html>
