@@ -10,6 +10,7 @@
 <h1>List Of Cities And Their Indicative</h1>
 <table border="1" width="600">
 <tr>
+<td>Department Name</td>    
 <td>City Name</td>
 <td>Population</td>
 <td>Airport</td>
@@ -17,6 +18,7 @@
 
 {% for City  in city %}
 <tr>
+<td>{{ City.department.department_name }}</td>
 <td>{{ City.city_name }}</td>
 <td>{{ City.population }}</td>
 <td>{{ City.airport }}</td>

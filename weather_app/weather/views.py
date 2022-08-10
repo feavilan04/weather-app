@@ -591,7 +591,7 @@ class DepartmentForm(View):
         departments.save()
         
         
-        print(request.POST.get ('country'), flush=True)
+        print(request.POST.get ('department_name'), flush=True)
         return redirect('list_department')
 
 class DepartmentListing(View):
@@ -635,26 +635,26 @@ class CityListing(View):
 
 class LocationForm(View):
     def get(self, request):
-        cityy=FullCity.objects.all()
+        city=FullCity.objects.all()
         context={
-            'citylist': cityy
+            'citylist': city
         }
         return render(request, 'weather/location.html', context)
 
     def post(self, request):
-        cityy_id=request.POST.get('department')
-        city_name= request.POST.get('city_name')
+        city_id=request.POST.get('city')
+        location_name= request.POST.get('location_name')
         population = request.POST.get('population')
-        city_obj=FullCity.objects.get(id=cityy_id)
+        city_obj=FullCity.objects.get(id=city_id)
         
         
         location=Location()
         location.city_location=city_obj
-        location.location_name=city_name
+        location.location_name=location_name
         location.population=population
         location.save()
         
-        print(request.POST.get ('city_location'), flush=True)
+        print(request.POST.get ('city'), flush=True)
         return redirect('location_list')
 
 class LocationListing(View):
@@ -666,32 +666,30 @@ class LocationListing(View):
 
 class NeighborhoodForm(View):
     def get(self, request):
-        locations=Location.objects.all()
+        location=Location.objects.all()
         context={
-            'locationlist': locations
+            'locationlist': location
         }
         return render(request, 'weather/neighborhood.html', context)
 
     def post(self, request):
-        location_id=request.POST.get('location_name')
+        location_id=request.POST.get('location')
         neighborhood_name= request.POST.get('neighborhood_name')
         population = request.POST.get('population')
         location_obj=Location.objects.get(id=location_id)
 
-
-
-        departments=Neighborhood()
-        departments.location_name=location_obj
-        departments.neighborhood_name=neighborhood_name
-        departments.population=population
-        departments.save()
+        neighborhood=Neighborhood()
+        neighborhood.location_name=location_obj
+        neighborhood.neighborhood_name=neighborhood_name
+        neighborhood.population=population
+        neighborhood.save()
         
         
-        print(request.POST.get ('neighborhood_name'), flush=True)
+        print(request.POST.get ('location'), flush=True)
         return redirect('neighborhood_list')
 
 class NeighborhoodListing(View):
     def get(self, request):
-        location=Location.objects.all()
-        context={'location':location}
+        neighborhood=Neighborhood.objects.all()
+        context={'neighborhood':neighborhood}
         return render(request,  'weather/listneighborhood.html', context)

@@ -11,13 +11,13 @@
 <table border="1" width="600">
 <tr>
 <td>City Name</td>
-<td>Department Name</td>
+<td>Location Name</td>
 <td>Population </td>
 </tr>
 
 {% for Location  in location %}
 <tr>
-<td>{{ Location.city_name }}</td>
+<td>{{ Location.city_location.city_name }}</td>
 <td>{{ Location.location_name }}</td>
 <td>{{ Location.population }}</td>
 </tr>

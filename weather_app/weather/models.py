@@ -223,12 +223,12 @@ class FullCity(models.Model):
     airport = models.BooleanField()
 
 class Location(models.Model):
-    city_location=models.ForeignKey(City, on_delete=models.CASCADE)
+    city_location=models.ForeignKey(FullCity, on_delete=models.CASCADE)
     location_name=models.CharField(max_length=25)
     population = models.IntegerField()
 
 class Neighborhood(models.Model):
-    location_name=models.ForeignKey(City, on_delete=models.CASCADE)
+    location_name=models.ForeignKey(Location, on_delete=models.CASCADE)
     neighborhood_name=models.CharField(max_length=25)
     population = models.IntegerField()
 
