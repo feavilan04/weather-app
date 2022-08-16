@@ -1,0 +1,25 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Lista</title>
+</head>
+<body>
+
+
+
+<h1>List Of Departments And Their Indicative</h1>
+<table border="1" width="600">
+<tr>
+<td>Country Namen</td>
+<td>Department Name</td>
+<td>Population </td>
+</tr>
+
+{% for Department  in department %}
+<tr>
+<td>{{ Department.country.country_name }}</td>    
+<td>{{ Department.department_name }}</td>
+<td>{{ Department.population }}</td>
+</tr>
+{% endfor %}
+</table>

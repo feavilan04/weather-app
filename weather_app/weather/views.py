@@ -1,12 +1,14 @@
 import datetime
+from email import message
 from multiprocessing import context
 import random
 import time
+from unicodedata import name
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.conf import settings
 import requests
-from .models import AnimalesZoologico, Cantante, Celulares, City, DescripcionDeObjetosEncontrados, Estudiante, FechaCumpleannos, InscripcionJuegosMesa, JuegosDeMesa, Jugador, Materias, NombreDeporte, Genero, ObjetosEncontrados, PersonasViaje, Precios, Registro, RegistroUs, RegistroUsuario, Reservaciones, VentaViajes, VentaVideojuegos, Ventas, RegistroFormulario
+from .models import AnimalesZoologico, BirthdayRegistrationForm, Cantante, Celulares, City, Country, Department, DescripcionDeObjetosEncontrados, Estudiante, FechaCumpleannos, FullCity, InscripcionJuegosMesa, JuegosDeMesa, Jugador, Materias, Neighborhood, NewRegistrationForm, NombreDeporte, Genero, ObjetosEncontrados, PersonasViaje, Precios, President, Product, Registro, RegistroUs, RegistroUsuario, Reservaciones, VentaViajes, VentaVideojuegos, Ventas, RegistroFormulario, Location
 from .forms import CityForm
 from django.views import View
 import random
@@ -411,3 +413,323 @@ class GetRecords(View):
         allregistro=RegistroFormulario.objects.all()
         context={'allregistro':allregistro}
         return render(request,  'weather/vistafilas.html', context)
+
+class BirthdayForm(View):
+    def get(self, request):
+        
+        return render(request, 'weather/birthdayform.html')
+    
+    def post(self, request):
+        firstname= request.POST.get ('first_name')
+        secondname = request.POST.get('second_name')
+        firstsurname = request.POST.get('first_surname')
+        secondsurname = request.POST.get('second_surname')
+        birthday =request.POST.get('birth_day')
+        city = request.POST.get('city')
+        language = request.POST.get('language')
+        message = request.POST.get('message')
+
+        new_message=BirthdayRegistrationForm()
+        new_message.first_name=firstname
+        new_message.second_name=secondname
+        new_message.first_surname=firstsurname
+        new_message.second_surname=secondsurname
+        new_message.birth_day=birthday
+        new_message.city=city
+        new_message.language=language
+        new_message.message=message
+        new_message.save()
+        
+        
+        dict = {
+            'first_name': firstname,
+            'secondname': secondname,
+            'firstsurname': firstsurname,
+            'secondsurname': secondsurname,
+            'birth_day': birthday,
+            'city': city,
+            'language': language,
+            'message':message
+        }
+        
+        
+        print(request.POST.get ('first_name'), flush=True)
+        return redirect('list')
+
+
+class BirthdayListing(View):
+    def get(self, request):
+        allregistration=BirthdayRegistrationForm.objects.all()
+        context={'allregistration':allregistration}
+        return render(request,  'weather/list.html', context)
+
+
+
+class NewForm(View):
+    def get(self, request):
+        
+        return render(request, 'weather/newform.html')
+
+    def post(self, request):
+        firstname= request.POST.get('first_name')
+        secondname = request.POST.get('second_name')
+        firstsurname = request.POST.get('first_surname')
+        secondsurname = request.POST.get('second_surname')
+        city = request.POST.get('city')
+
+        names=NewRegistrationForm()
+        names.first_name=firstname
+        names.second_name=secondname
+        names.first_surname=firstsurname
+        names.second_surname=secondsurname
+        names.city=city
+        names.save()
+        
+        
+        dict = {
+            'first_name': firstname,
+            'secondname': secondname,
+            'firstsurname': firstsurname,
+            'secondsurname': secondsurname,
+            'city': city
+            
+        }
+        
+        
+        print(request.POST.get ('first_name'), flush=True)
+        return render(request, 'weather/newform.html', dict )
+
+class Countries(View):
+    def get(self, request):
+        return render(request, 'weather/countries.html')
+
+    def post(self, request):
+        countryname= request.POST.get('country_name')
+        telephoneindicative = request.POST.get('telephone_indicative')
+
+        names=Country()
+        names.country_name=countryname
+        names.telephone_indicative=telephoneindicative
+        names.save()
+        
+        dict = {
+            'country_name': countryname,
+            'telephone_indicative': telephoneindicative
+            
+        }
+        print(request.POST.get ('country_name'), flush=True)
+        return redirect('list_countries')
+    
+class CountriesListing(View):
+    def get(self, request):
+        allcities=Country.objects.all()
+        context={'allcities':allcities}
+        return render(request,  'weather/listcities.html', context)
+
+class ProductForm(View):
+    def get(self, request):
+        countries=Country.objects.filter(id__gte =3)
+        context={
+            'countrieslist': countries
+        }
+
+
+
+        return render(request, 'weather/product.html', context)
+
+    def post(self, request):
+        country_id=request.POST.get('country')
+        productname= request.POST.get('product_name')
+        barcode = request.POST.get('barcode')
+        technology = request.POST.get('technology')
+        country_obj=Country.objects.get(id=country_id)
+        
+        
+        products=Product()
+        products.country=country_obj
+        products.product_name=productname
+        products.barcode=barcode
+        products.technology=technology
+        products.save()
+        
+        dict = {
+            'country': country,
+            'product_name': productname,
+            'barcode': barcode,
+            'technology': technology
+        }
+        print(request.POST.get ('country'), flush=True)
+        return redirect('list_product')
+
+class ProductListing(View):
+    def get(self, request):
+        allproduct=Product.objects.all()
+        context={'allproduct':allproduct}
+        return render(request,  'weather/listproduct.html', context)
+
+
+class DepartmentForm(View):
+    def get(self, request):
+        countries=Country.objects.all()
+        context={
+            'countrieslist': countries
+        }
+        return render(request, 'weather/department.html', context)
+
+    def post(self, request):
+        country_id=request.POST.get('country')
+        departmentname= request.POST.get('department_name')
+        population = request.POST.get('population')
+        country_obj=Country.objects.get(id=country_id)
+
+
+
+        departments=Department()
+        departments.country=country_obj
+        departments.department_name=departmentname
+        departments.population=population
+        departments.save()
+        
+        
+        print(request.POST.get ('department_name'), flush=True)
+        return redirect('list_department')
+
+class DepartmentListing(View):
+    def get(self, request):
+        department=Department.objects.all()
+        context={'department':department}
+        return render(request,  'weather/listdepartment.html', context)
+
+class CitiesForm(View):
+    def get(self, request):
+        departments=Department.objects.all()
+        context={
+            'departmentlist': departments
+        }
+        return render(request, 'weather/city.html', context)
+
+    def post(self, request):
+        department_id=request.POST.get('department')
+        city_name= request.POST.get('city_name')
+        population = request.POST.get('population')
+        airport = request.POST.get('airport')
+        boolean_airport = True if airport == 'on' else False
+        department_obj=Department.objects.get(id=department_id)
+        
+        
+        city=FullCity()
+        city.department=department_obj
+        city.city_name=city_name
+        city.population=population
+        city.airport=boolean_airport
+        city.save()
+        
+        print(request.POST.get ('department'), flush=True)
+        return redirect('city_list')
+
+class CityListing(View):
+    def get(self, request):
+        city=FullCity.objects.all()
+        context={'city':city}
+        return render(request,  'weather/listcity.html', context)
+
+class LocationForm(View):
+    def get(self, request):
+        city=FullCity.objects.all()
+        context={
+            'citylist': city
+        }
+        return render(request, 'weather/location.html', context)
+
+    def post(self, request):
+        city_id=request.POST.get('city')
+        location_name= request.POST.get('location_name')
+        population = request.POST.get('population')
+        city_obj=FullCity.objects.get(id=city_id)
+        
+        
+        location=Location()
+        location.city_location=city_obj
+        location.location_name=location_name
+        location.population=population
+        location.save()
+        
+        print(request.POST.get ('city'), flush=True)
+        return redirect('location_list')
+
+class LocationListing(View):
+    def get(self, request):
+        location=Location.objects.all()
+        context={'location':location}
+        return render(request,  'weather/listlocation.html', context)
+
+
+class NeighborhoodForm(View):
+    def get(self, request):
+        location=Location.objects.all()
+        context={
+            'locationlist': location
+        }
+        return render(request, 'weather/neighborhood.html', context)
+
+    def post(self, request):
+        location_id=request.POST.get('location')
+        neighborhood_name= request.POST.get('neighborhood_name')
+        population = request.POST.get('population')
+        location_obj=Location.objects.get(id=location_id)
+
+        neighborhood=Neighborhood()
+        neighborhood.location_name=location_obj
+        neighborhood.neighborhood_name=neighborhood_name
+        neighborhood.population=population
+        neighborhood.save()
+        
+        
+        print(request.POST.get ('location'), flush=True)
+        return redirect('neighborhood_list')
+
+class NeighborhoodListing(View):
+    def get(self, request):
+        neighborhood=Neighborhood.objects.all()
+        context={'neighborhood':neighborhood}
+        return render(request,  'weather/listneighborhood.html', context)
+
+class PresidentForm(View):
+    def get(self, request):
+        city=FullCity.objects.all()
+        country=Country.objects.all()
+        neighborhood=Neighborhood.objects.all()
+        context={
+            'citylist': city,
+            'countrylist': country,
+            'neighborhoodlist': neighborhood
+        }
+        return render(request, 'weather/president.html', context)
+
+    def post(self, request):
+        city_id=request.POST.get('city')
+        country_id=request.POST.get('country')
+        neighborhood_id=request.POST.get('neighborhood')
+        name= request.POST.get('name')
+        date_of_birth = request.POST.get('date_of_birth')
+        city_obj=FullCity.objects.get(id=city_id)
+        country_obj=Country.objects.get(id=country_id)
+        neighborhood_obj=Neighborhood.objects.get(id=neighborhood_id)
+
+        president=President()
+        president.city_of_birth=city_obj
+        president.country=country_obj
+        president.neighborhood=neighborhood_obj
+        president.name=name
+        president.date_of_birth=date_of_birth
+        president.save()
+        
+        
+        print(request.POST.get ('city'), flush=True)
+        return redirect('president_list')
+
+class PresidentListing(View):
+    def get(self, request):
+        president=President.objects.all()
+        context={'president':president}
+        return render(request,  'weather/listpresident.html', context)

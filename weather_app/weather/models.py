@@ -1,5 +1,4 @@
 from django.db import models
-
 # Create your models here.
 class City(models.Model):
     name = models.CharField(max_length=25)
@@ -144,4 +143,98 @@ class RegistroFormulario(models.Model):
     )
     numero_de_documento=models.IntegerField(max_length=25)
     correo=models.EmailField()
-    
+
+
+class BirthdayRegistrationForm(models.Model):
+    first_name = models.CharField(max_length=25)
+    second_name =models.CharField(max_length=25)
+    first_surname  = models.CharField(max_length=25)
+    second_surname =models.CharField(max_length=25)
+    birth_day=models.DateField()
+    city=models.CharField(max_length=25)
+    CHINESE = 'CHI'
+    DUTCH = 'DUT'
+    ENGLISH = 'EN'
+    FRENCH = 'FRE'
+    GERMAN = 'GER'
+    ITALIAN = 'ITA'
+    JAPANESE = 'JAP'
+    LATIN = 'LAT'
+    NORWEGIAN = 'NOR'
+    PORTUGUESE= 'POR'
+    RUSSIAN = 'RUS'
+    SPANISH = 'SPA'  
+    THAI = 'THA'
+    UKRAINIAN = 'UKR'
+    VIETNAMESE = 'VIE'
+    LANGUAGE = [
+        (CHINESE, 'Chinese'),
+        (DUTCH, 'Duth'),
+        (ENGLISH, 'English'),
+        (FRENCH, 'French'),
+        (GERMAN, 'German'),
+        (ITALIAN, 'Italian'),
+        (JAPANESE, 'Japanese'),
+        (LATIN, 'Latin'),
+        (NORWEGIAN, 'Norwegian'),
+        (PORTUGUESE, 'Portuguese'),
+        (RUSSIAN, 'Rusian'),
+        (SPANISH, 'Spanish'),
+        (THAI, 'Thai'),
+        (UKRAINIAN, 'Ukrainian'),
+        (VIETNAMESE, 'Vietnamese'),
+    ]
+    language =models.CharField(
+        max_length=25,
+        choices=LANGUAGE,
+        default="GER",    
+    )
+    message=models.TextField(max_length=200)
+
+
+class NewRegistrationForm(models.Model):
+    first_name = models.CharField(max_length=25)
+    second_name =models.CharField(max_length=25)
+    first_surname  = models.CharField(max_length=25)
+    second_surname =models.CharField(max_length=25)
+    city=models.CharField(max_length=25)
+
+
+class Country(models.Model):
+    country_name=models.CharField(max_length=25)
+    telephone_indicative = models.IntegerField()
+
+class Product(models.Model):
+    country=models.ForeignKey(Country, on_delete=models.CASCADE)
+    product_name=models.CharField(max_length=25)
+    barcode=models.CharField(max_length=30)
+    technology=models.BooleanField()
+   
+class Department(models.Model):
+    country=models.ForeignKey(Country, on_delete=models.CASCADE)
+    department_name=models.CharField(max_length=25)
+    population = models.IntegerField()
+
+
+class FullCity(models.Model):
+    department=models.ForeignKey(Department, on_delete=models.CASCADE)
+    city_name=models.CharField(max_length=25)
+    population = models.IntegerField()
+    airport = models.BooleanField()
+
+class Location(models.Model):
+    city_location=models.ForeignKey(FullCity, on_delete=models.CASCADE)
+    location_name=models.CharField(max_length=25)
+    population = models.IntegerField()
+
+class Neighborhood(models.Model):
+    location_name=models.ForeignKey(Location, on_delete=models.CASCADE)
+    neighborhood_name=models.CharField(max_length=25)
+    population = models.IntegerField()
+
+class President(models.Model):
+    city_of_birth=models.ForeignKey(FullCity, on_delete=models.CASCADE)
+    country=models.ForeignKey(Country, on_delete=models.CASCADE)
+    neighborhood=models.ForeignKey(Neighborhood, on_delete=models.CASCADE)
+    name=models.CharField(max_length=25)
+    date_of_birth = models.DateField()    

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+ .button {
+      background-color: #008CBA;
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+    }    
+    
+</style>
+</head>
+<body>
+
+<h1>City</h1>
+
+<form action="" method="post">
+    {% csrf_token %} 
+    <label for="departments">Select the department:</label>
+
+    <select name="department" id="department">
+    {% for Department  in departmentlist %}
+    <option value="{{Department.id}}">{{Department.department_name}}</option>
+    {% endfor %}
+  </select><br><br>
+  <label for="cityname">City Name:</label>
+  <input type="text" id="cityname" name="city_name"><br><br>
+  <label for="population">Population</label>
+  <input type="number" id="population" name="population"><br><br>
+  
+  <input type="checkbox" id="airport" name="airport" >
+  <label for="airport">Does it have airport?</label><br>
+  <button class="button">Enviar</button>
+</form>
+
+</body>
+</html>
