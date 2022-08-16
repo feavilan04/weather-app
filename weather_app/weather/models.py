@@ -232,4 +232,9 @@ class Neighborhood(models.Model):
     neighborhood_name=models.CharField(max_length=25)
     population = models.IntegerField()
 
-    
+class President(models.Model):
+    city_of_birth=models.ForeignKey(FullCity, on_delete=models.CASCADE)
+    country=models.ForeignKey(Country, on_delete=models.CASCADE)
+    neighborhood=models.ForeignKey(Neighborhood, on_delete=models.CASCADE)
+    name=models.CharField(max_length=25)
+    date_of_birth = models.DateField()    

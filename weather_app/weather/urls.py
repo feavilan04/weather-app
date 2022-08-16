@@ -29,5 +29,7 @@ urlpatterns = [
     path('location', views.LocationForm.as_view(), name='location'),
     path('location-list', views.LocationListing.as_view(), name='location_list'),
     path('neighborhood', views.NeighborhoodForm.as_view(), name='neighborhood'),
-    path('neighborhood-list', views.NeighborhoodListing.as_view(), name='neighborhood_list')
+    path('neighborhood-list', views.NeighborhoodListing.as_view(), name='neighborhood_list'),
+    path('president', views.PresidentForm.as_view(), name='president'),
+    path('president-list', views.PresidentListing.as_view(), name='president_list')
 ]

@@ -8,7 +8,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.conf import settings
 import requests
-from .models import AnimalesZoologico, BirthdayRegistrationForm, Cantante, Celulares, City, Country, Department, DescripcionDeObjetosEncontrados, Estudiante, FechaCumpleannos, FullCity, InscripcionJuegosMesa, JuegosDeMesa, Jugador, Materias, Neighborhood, NewRegistrationForm, NombreDeporte, Genero, ObjetosEncontrados, PersonasViaje, Precios, Product, Registro, RegistroUs, RegistroUsuario, Reservaciones, VentaViajes, VentaVideojuegos, Ventas, RegistroFormulario, Location
+from .models import AnimalesZoologico, BirthdayRegistrationForm, Cantante, Celulares, City, Country, Department, DescripcionDeObjetosEncontrados, Estudiante, FechaCumpleannos, FullCity, InscripcionJuegosMesa, JuegosDeMesa, Jugador, Materias, Neighborhood, NewRegistrationForm, NombreDeporte, Genero, ObjetosEncontrados, PersonasViaje, Precios, President, Product, Registro, RegistroUs, RegistroUsuario, Reservaciones, VentaViajes, VentaVideojuegos, Ventas, RegistroFormulario, Location
 from .forms import CityForm
 from django.views import View
 import random
@@ -693,3 +693,43 @@ class NeighborhoodListing(View):
         neighborhood=Neighborhood.objects.all()
         context={'neighborhood':neighborhood}
         return render(request,  'weather/listneighborhood.html', context)
+
+class PresidentForm(View):
+    def get(self, request):
+        city=FullCity.objects.all()
+        country=Country.objects.all()
+        neighborhood=Neighborhood.objects.all()
+        context={
+            'citylist': city,
+            'countrylist': country,
+            'neighborhoodlist': neighborhood
+        }
+        return render(request, 'weather/president.html', context)
+
+    def post(self, request):
+        city_id=request.POST.get('city')
+        country_id=request.POST.get('country')
+        neighborhood_id=request.POST.get('neighborhood')
+        name= request.POST.get('name')
+        date_of_birth = request.POST.get('date_of_birth')
+        city_obj=FullCity.objects.get(id=city_id)
+        country_obj=Country.objects.get(id=country_id)
+        neighborhood_obj=Neighborhood.objects.get(id=neighborhood_id)
+
+        president=President()
+        president.city_of_birth=city_obj
+        president.country=country_obj
+        president.neighborhood=neighborhood_obj
+        president.name=name
+        president.date_of_birth=date_of_birth
+        president.save()
+        
+        
+        print(request.POST.get ('city'), flush=True)
+        return redirect('president_list')
+
+class PresidentListing(View):
+    def get(self, request):
+        president=President.objects.all()
+        context={'president':president}
+        return render(request,  'weather/listpresident.html', context)

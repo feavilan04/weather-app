@@ -7,17 +7,27 @@
 
 
 
-<h1>List Of Countries And Their Indicative</h1>
+<h1>List Of Presidents And Their Indicative</h1>
 <table border="1" width="600">
 <tr>
-<td>Country Name</td>
-<td>Telephone Indicative </td>
+<td>Country</td>
+<td>City Of Birth</td>
+<td>Neighborhood</td> 
+<td>Department</td>   
+<td>Name</td>
+<td>Date Of Birth</td>
+
+
 </tr>
 
-{% for Country  in allcities %}
+{% for President  in president %}
 <tr>
-<td>{{ Country.country_name }}</td>
-<td>{{ Country.telephone_indicative }}</td>
+<td>{{ President.country.country_name }}</td>
+<td>{{ President.city_of_birth.city_name }}</td>
+<td>{{ President.neighborhood.neighborhood_name }}</td>
+<td>{{ President.city_of_birth.department.department_name }}</td>
+<td>{{ President.name }}</td>
+<td>{{ President.date_of_birth }}</td>
 </tr>
 {% endfor %}
 </table>
