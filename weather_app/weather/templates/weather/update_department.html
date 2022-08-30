@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+ .button {
+      background-color: #008CBA;
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+    }    
+    
+</style>
+</head>
+<body>
+
+<h1>City</h1>
+
+<form action="" method="post">
+
+    {% csrf_token %} 
+    <label for="country">Select the country:</label>
+    <select name="country" id="country">
+    {% for Country  in countrylist %}
+      {% if selecteddepartment.country.id == Country.id%}
+      <option value="{{Country.id}}" selected>{{Country.country_name}}</option>
+      {% else %}
+      <option value="{{Country.id}}">{{Country.country_name}}</option>
+      {% endif %}
+    {% endfor %}  
+  </select><br><br>
+    
+  <label for="department_name">Name Department:</label>
+  <input type="text" id="department_name" name="department_name" value="{{selecteddepartment.department_name}}"><br><br>
+  <label for="population">Population</label>
+  <input type="number" id="population" name="population" value="{{selecteddepartment.population}}"><br><br>
+
+<button class="button">Enviar</button>
+</form>
+
+</body>
+</html>
