@@ -31,5 +31,11 @@ urlpatterns = [
     path('neighborhood', views.NeighborhoodForm.as_view(), name='neighborhood'),
     path('neighborhood-list', views.NeighborhoodListing.as_view(), name='neighborhood_list'),
     path('president', views.PresidentForm.as_view(), name='president'),
-    path('president-list', views.PresidentListing.as_view(), name='president_list')
+    path('president-list', views.PresidentListing.as_view(), name='president_list'),
+    path('presidentupdate/<id_president>', views.UpdatePresident.as_view(), name='president_update'),
+    path('presidentupdate-list', views.PresidentUpdateListing.as_view(), name='president_list'),
+    path('cityupdate/<id_city>', views.UpdateFullCity.as_view(), name='city_update'),
+    path('cityupdate-list', views.FullCityUpdateListing.as_view(), name='city_list'),
+    path('departmentupdate/<id_department>', views.UpdateDepartment.as_view(), name='department_update'),
+    path('departmentupdate-list', views.DepartmentUpdateListing.as_view(), name='list_department')
 ]

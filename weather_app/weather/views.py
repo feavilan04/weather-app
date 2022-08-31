@@ -711,7 +711,7 @@ class PresidentForm(View):
         country_id=request.POST.get('country')
         neighborhood_id=request.POST.get('neighborhood')
         name= request.POST.get('name')
-        date_of_birth = request.POST.get('date_of_birth')
+        dateofbirth = request.POST.get('date_of_birth')
         city_obj=FullCity.objects.get(id=city_id)
         country_obj=Country.objects.get(id=country_id)
         neighborhood_obj=Neighborhood.objects.get(id=neighborhood_id)
@@ -721,7 +721,7 @@ class PresidentForm(View):
         president.country=country_obj
         president.neighborhood=neighborhood_obj
         president.name=name
-        president.date_of_birth=date_of_birth
+        president.date_of_birth=dateofbirth
         president.save()
         
         
@@ -733,3 +733,107 @@ class PresidentListing(View):
         president=President.objects.all()
         context={'president':president}
         return render(request,  'weather/listpresident.html', context)
+
+class UpdatePresident(View):
+    def get(self, request, id_president):
+        selected_president=President.objects.get(id=id_president)
+        country=Country.objects.all()
+        city=FullCity.objects.all()
+        neighborhood=Neighborhood.objects.all()
+        context={
+            'selectedpresident': selected_president,
+            'countrylist': country,
+            'citylist': city,
+            'neighborhoodlist': neighborhood
+        }
+        return render(request,  'weather/update_president.html', context)
+    def post(self, request, id_president):
+        selected_president=President.objects.get(id=id_president)
+        country_id=request.POST.get('country')
+        neighborhood_id=request.POST.get('neighborhood')
+        name= request.POST.get('name')
+        date_of_birth = request.POST.get('date_of_birth')
+        country_obj=Country.objects.get(id=country_id)
+        neighborhood_obj=Neighborhood.objects.get(id=neighborhood_id)
+
+        
+        selected_president.name=name
+        selected_president.country=country_obj
+        selected_president.neighborhood=neighborhood_obj
+        selected_president.date_of_birth=date_of_birth
+        selected_president.save()
+        
+        
+        print(request.POST.get ('country'), flush=True)
+        return redirect('president_list')
+
+class PresidentUpdateListing(View):
+    def get(self, request):
+        updatepresident=President.objects.all()
+        context={'president':updatepresident}
+        return render(request,  'weather/listpresident.html', context)
+
+class UpdateFullCity(View):
+    def get(self, request, id_city):
+        selected_city=FullCity.objects.get(id=id_city)
+        department=Department.objects.all()
+        context={
+            'selectedcity': selected_city,
+            'departmentlist': department
+        }
+        return render(request,  'weather/update_city.html', context)
+        
+    def post(self, request, id_city):
+        selected_city=FullCity.objects.get(id=id_city)
+        department_id=request.POST.get('department')
+        city_name=request.POST.get('city_name')
+        population=request.POST.get('population')
+        airport=request.POST.get('airport')
+        department_obj=Department.objects.get(id=department_id)
+        boolean_airport= True if airport == 'on' else False
+        
+        selected_city.department=department_obj
+        selected_city.city_name=city_name
+        selected_city.population=population
+        selected_city.airport=boolean_airport
+        selected_city.save()
+              
+        print(request.POST.get ('city_name'), flush=True)
+        return redirect('city_list')
+
+class FullCityUpdateListing(View):
+    def get(self, request, ):
+        updatecity=FullCity.objects.all()
+        context={'city':updatecity}
+        return render(request,  'weather/listcity.html', context)
+
+class UpdateDepartment(View):
+    def get(self, request, id_department):
+        selected_department=Department.objects.get(id=id_department)
+        country=Country.objects.all()
+        context={
+            'selecteddepartment': selected_department,
+            'countrylist': country
+        }
+        return render(request,  'weather/update_department.html', context)
+        
+    def post(self, request, id_department):
+        selected_department=Department.objects.get(id=id_department)
+        country_id=request.POST.get('country')
+        department_name=request.POST.get('department_name')
+        population=request.POST.get('population')
+        country_obj=Country.objects.get(id=country_id)
+        
+        selected_department.department_name=department_name
+        selected_department.country_name=country_obj
+        selected_department.population=population
+        selected_department.save()
+              
+        print(request.POST.get ('country_name'), flush=True)
+        return redirect('list_department')
+
+class DepartmentUpdateListing(View):
+    def get(self, request, ):
+        updatedepartment=Department.objects.all()
+        context={'department':updatedepartment}
+        return render(request,  'weather/listdepartment.html', context)
